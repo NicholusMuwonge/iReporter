@@ -12,11 +12,10 @@ size: auto;
 	margin-left: 40%;
 }
 
-body background-image
+background-image
 {
 	background-image: url(images/paper.jpg);
-	filter: blur(8px);
-	-webkit-backdrop-filter: blur(8px);
+	
 }
 p {
 	font-size: 13px;
@@ -43,10 +42,11 @@ input[type="text"], input[type="email"], input[type="password"], input[type="num
 	padding: 5px;
 	text-align: center;
 	outline: none;
-	border: 1px solid #ddd;
+	border: 0.8px black solid;
+	background-color: azure;
 }
 input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
-	border-color: #14B9D6;
+	border-color:0.8px black solid ;
 	border-radius:7px;
 }
 textarea {
@@ -55,7 +55,7 @@ textarea {
 	height: 150px;
 	padding: 5px;
 	outline: none;
-	border: 1px solid #ddd;
+	border: 1px solid black;
 	border-radius:7px;
 }
 button {
@@ -66,7 +66,7 @@ button {
 	color: Black;
 	border: 1px solid black;
 	height: 40px;
-	background-color:gold;
+	background-color:gainsboro;
 	padding: 5px;
 	text-align: center;
 	border-radius:7px;
@@ -74,11 +74,10 @@ button {
 }
 form
 {
-  background-color: white; /* Fallback color */
-  background-color:whitesmoke; /* Black w/opacity/see-through */
+  background-color: white; 
   color:brown;
   font-weight: bold;
-  border: 1px solid gold;
+  border: 2px solid grey;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -86,18 +85,20 @@ form
   width: 40%;
   padding: 10px;
   text-align: center;
-  
-  margin-left: 10%;
+  border-radius: 7px;
+  margin-left: 1%;
 }
 
 h8
 {
-	color:grey;
+	color:black;
 	text-decoration-color: aquamarine;
 	font-style: dotted;
 	font-weight: bold;
 	font-size: 20px;
 	margin-top: 40%;
+	font-style: italic;
+	opacity:0.5px;
 	
 }
 table
