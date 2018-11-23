@@ -14,7 +14,7 @@ size: auto;
 
 body background-image
 {
-	background-image: url(images/tablesetting.jpg);
+	background-image: url(images/typewriter.jpg);
 	filter: blur(8px);
 	-webkit-backdrop-filter: blur(8px);
 }
