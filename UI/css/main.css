@@ -21,6 +21,14 @@ p {
 	font-size: 13px;
 	color: #222;
 	font-family: Arial, Helvetica, sans-serif;
+	margin-left: 20%;
+}
+.r {
+	font-size: 33px;
+	color:grey;
+	font-family: Arial, Helvetica, sans-serif;
+	margin-left: 20%;
+	top:60%;
 }
 h1, h2, h3, h4 {
 	color: #000;
@@ -83,10 +91,13 @@ form
   left: 50%;
   transform: translate(-50%, -50%);
   width: 40%;
-  padding: 10px;
+  padding: 7px;
   text-align: center;
   border-radius: 7px;
-  margin-left: 1%;
+  margin-left: 25%;
+  height:450px;
+  background-image: url(images/glass.jpg)
+ 
 }
 
 h8
@@ -99,6 +110,7 @@ h8
 	margin-top: 40%;
 	font-style: italic;
 	opacity:0.5px;
+	text-align: center;
 	
 }
 table
