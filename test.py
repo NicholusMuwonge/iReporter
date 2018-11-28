@@ -1,7 +1,7 @@
 from flask import Flask,json,jsonify
 import unittest
-from feature.model import Record
-from feature.routes import app
+from app.model import Record
+from app.routes import app
 
 class test_feature(unittest.TestCase):
     @classmethod
@@ -33,6 +33,11 @@ class test_feature(unittest.TestCase):
         self.assertEqual(i.status_code,201)#check if it was successfully created
        # i=self.client.get('/ft/v1/orders')
         #self.assertEqual(i.status_code,200)#to check if it was successfuly added to the list
+
+
+    def test_get_all_records(self):
+        item=self.client.get('/api/v1/records')
+        self.assertEqual(item.status_code,200)
 
 
 
