@@ -37,3 +37,10 @@ def post_record():
             return jsonify({'message':'record created successfully','record':new_record}),201
 
 
+@app.route('/api/v1/records', methods=['GET'])
+def return_all_orders():
+    # if record_object.records==[]:
+    #     return jsonify({'message':'This list is empty'}),204#no item found
+    # else:
+    list_of_orders=record_object.get_all_orders()
+    return jsonify({'records':list_of_orders}),200

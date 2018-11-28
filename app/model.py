@@ -6,16 +6,21 @@ from random import randint
 
 
 class Record:
-    records=[]
+     #initialize record lists
+    def __init__(self):
+        self.records=[]
+    
 
     def   add_record(self,record):#record is the new redflag being created.
         """creating fields that will be returned automatically"""
         record['record_no']= int(len(self.records) + 1 )
         record['record_type']= 'Redflag_record'
+        self.records.append(record)
         return  record
 
 
-
+    def    get_all_orders(self):
+        return self.records
 
         
     
