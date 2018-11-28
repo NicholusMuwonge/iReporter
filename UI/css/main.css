@@ -1,0 +1,119 @@
+body,html
+{
+color: #000;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 13px;
+size: auto;
+
+}
+
+.top-padding{
+	margin-top: 10%;
+	margin-left: 40%;
+}
+
+background-image
+{
+	background-image: url(images/paper.jpg);
+	
+}
+p {
+	font-size: 13px;
+	color: #222;
+	font-family: Arial, Helvetica, sans-serif;
+	margin-left: 20%;
+}
+.r {
+	font-size: 33px;
+	color:grey;
+	font-family: Arial, Helvetica, sans-serif;
+	margin-left: 20%;
+	top:60%;
+}
+h1, h2, h3, h4 {
+	color: #000;
+	font-family: "Open Sans", sans-serif;
+	line-height: 18px;
+}
+h1 {
+	font-size: 20px;
+	text-transform:none;
+	margin-left: 5%;
+	text-align: center;
+}
+
+input[type="text"], input[type="email"], input[type="password"], input[type="number"] {
+	border-radius:7px; 
+	width: 100%;
+	margin-bottom: 10px;
+	height: 25px;
+	padding: 5px;
+	text-align: center;
+	outline: none;
+	border: 0.8px black solid;
+	background-color: azure;
+}
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+	border-color:0.8px black solid ;
+	border-radius:7px;
+}
+textarea {
+	width: 100%;
+	margin-bottom: 10px;
+	height: 150px;
+	padding: 5px;
+	outline: none;
+	border: 1px solid black;
+	border-radius:7px;
+}
+button {
+	cursor: pointer;
+	margin-top: 10px;
+	width: 103%;
+	margin-bottom: 10px;
+	color: Black;
+	border: 1px solid black;
+	height: 40px;
+	background-color:gainsboro;
+	padding: 5px;
+	text-align: center;
+	border-radius:7px;
+	
+}
+form
+{
+  background-color: white; 
+  color:brown;
+  font-weight: bold;
+  border: 2px solid grey;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;
+  padding: 7px;
+  text-align: center;
+  border-radius: 7px;
+  margin-left: 25%;
+  height:450px;
+  background-image: url(images/glass.jpg)
+ 
+}
+
+h8
+{
+	color:black;
+	text-decoration-color: aquamarine;
+	font-style: dotted;
+	font-weight: bold;
+	font-size: 20px;
+	margin-top: 40%;
+	font-style: italic;
+	opacity:0.5px;
+	text-align: center;
+	
+}
+table
+{
+	opacity:none;
+}
