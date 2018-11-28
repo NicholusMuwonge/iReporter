@@ -9,13 +9,8 @@ Its an application thats supposed to be used by some one to raise an issue to th
 6. Users can add geolocation (Lat Long Coordinates) to their  red-ﬂag  or  intervention  records .   <br><br>
 7. Users can change the geolocation (Lat Long Coordinates) attached to their  red-ﬂag  or  intervention  records .   <br><br>
 8. Admin can change the  status  of a record to either  under investigation, rejected  (in the  event of a false claim)   or  resolved  (in the event that the claim has been investigated and  resolved) . 
- <br><br>
-The application is hosted <a href="https://nicholusmuwonge.github.io/iReporter/."><strong>here</strong></a>
 
-<<<<<<< HEAD
-The application is hosted <a href="https://nicholusmuwonge.github.io/iReporter/UI/index.">here</a>
+The application is hosted <a href="https://nicholusmuwonge.github.io/iReporter/UI/index.html">here</a>
 </table>
-=======
->>>>>>> 815a5e542b71c5d0bb679b879e96b1ed4feb2012
 
 
