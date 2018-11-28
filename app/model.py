@@ -15,7 +15,8 @@ class Record:
         return  record
 
 
-
+    def    get_all_orders(self):
+        return (self.records),200
 
         
     
