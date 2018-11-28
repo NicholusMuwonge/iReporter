@@ -12,16 +12,25 @@ size: auto;
 	margin-left: 40%;
 }
 
-body background-image
+
+background-image
 {
-	background-image: url(images/tablesetting.jpg);
-	filter: blur(8px);
-	-webkit-backdrop-filter: blur(8px);
+	background-image: url(images/paper.jpg);
+	
+
 }
 p {
 	font-size: 13px;
 	color: #222;
 	font-family: Arial, Helvetica, sans-serif;
+	margin-left: 20%;
+}
+.r {
+	font-size: 33px;
+	color:grey;
+	font-family: Arial, Helvetica, sans-serif;
+	margin-left: 20%;
+	top:60%;
 }
 h1, h2, h3, h4 {
 	color: #000;
@@ -43,10 +52,13 @@ input[type="text"], input[type="email"], input[type="password"], input[type="num
 	padding: 5px;
 	text-align: center;
 	outline: none;
-	border: 1px solid #ddd;
+
+
+	border: 0.8px black solid;
+	background-color: azure;
 }
 input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
-	border-color: #14B9D6;
+	border-color:0.8px black solid ;
 	border-radius:7px;
 }
 textarea {
@@ -56,6 +68,7 @@ textarea {
 	padding: 5px;
 	outline: none;
 	border: 1px solid #ddd;
+
 	border-radius:7px;
 }
 button {
@@ -63,10 +76,13 @@ button {
 	margin-top: 10px;
 	width: 103%;
 	margin-bottom: 10px;
+
 	color: #fff;
 	border: 1px solid black;
 	height: 40px;
-	background-color:#53b95b burlywood;
+	background-color:#53b95b burlywood
+
+	
 	padding: 5px;
 	text-align: center;
 	border-radius:7px;
@@ -74,33 +90,47 @@ button {
 }
 form
 {
+
   background-color: rgb(243, 247, 7); /* Fallback color */
   background-color:whitesmoke; /* Black w/opacity/see-through */
   color:brown;
   font-weight: bold;
   border: 1px solid gold;
+
+
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 40%;
+
   padding: 10px;
   text-align: center;
   
   margin-left: 10%;
+=======
+
+
 }
 
 h8
 {
 	color:grey;
+
+
 	text-decoration-color: aquamarine;
 	font-style: dotted;
 	font-weight: bold;
 	font-size: 20px;
 	margin-top: 40%;
-	
+
+
 }
 table
 {
-	opacity:5;
+
+
+  
+	opacity:none;
 }
+
