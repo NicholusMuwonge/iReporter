@@ -60,6 +60,20 @@ def update_record(record_no):
 
 
 
+@app.route('/api/v1/<int:record_no>', methods=['GET'])
+def return_one_only(record_no):
+    if 'record_no'=='' or 'record_no' is None:
+        return 'item not found',404
+    if record_object.records==[]:
+        return 'this list is empty',204
+    if isinstance(record_no,str):
+        return 'not applicable',404
+    list_of_orders=record_object.return_one(record_no)
+    if list_of_orders:
+        return jsonify({'record':list_of_orders}),200
+
+
+
 
 
 
