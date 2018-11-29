@@ -46,6 +46,19 @@ def return_all_records():
         return jsonify({'records':list_of_orders}),200
 
 
+@app.route('/api/v1/<int:record_no>', methods=['PUT'])
+def update_record(record_no):
+    if isinstance (record_no,int):
+
+        #record_title=request.json["record_title"]
+        record_geolocation=request.json["record_geolocation"]
+        update_record=record_object.update_record(record_no,record_geolocation)
+        return jsonify({"records":update_record}),201
+
+    else:
+        return ('type a proper record_no')
+
+
 
 
 

@@ -23,7 +23,15 @@ class Record:
         return self.records
 
 
-    
+    def update_record(self,record_no,record_geolocation):
+
+        update_record=[record for record in self.records if record['record_no']== record_no]
+        if update_record:
+            # update_record[0]['record_title']=record_title 
+            update_record[0]['record_geolocation']=record_geolocation
+            return update_record
+        else:
+            return ('this record doesnt exist')
 
    
         
