@@ -37,3 +37,60 @@ def post_record():
             return jsonify({'message':'record created successfully','record':new_record}),201
 
 
+@app.route('/api/v1/records', methods=['GET'])
+def return_all_records():
+    if record_object.records==[]:
+          return jsonify({'message':'This list is empty'}),204#no item found
+    else:
+        list_of_orders=record_object.get_all_orders()
+        return jsonify({'records':list_of_orders}),200
+
+
+@app.route('/api/v1/records/<int:record_no>', methods=['PUT'])
+def update_record(record_no):
+    if isinstance (record_no,int):
+
+        #record_title=request.json["record_title"]
+        record_geolocation=request.json["record_geolocation"]
+        update_record=record_object.update_record(record_no,record_geolocation)
+        return jsonify({"records":update_record}),201
+
+    else:
+        return ('type a proper record_no')
+
+
+
+@app.route('/api/v1/<int:record_no>/records', methods=['GET'])
+def return_one_only(record_no):
+    if 'record_no'=='' or 'record_no' is None:
+        return 'item not found',404
+    if record_object.records==[]:
+        return 'this list is empty',204
+    if isinstance(record_no,str):
+        return 'not applicable',404
+    list_of_orders=record_object.return_one(record_no)
+    if list_of_orders:
+        return jsonify({'record':list_of_orders}),200
+
+@app.route('/api/v1/<int:record_no>/records', methods=['DELETE'])
+def delete_record(record_no):
+    if 'record_no'=='' or 'record_no' is None:
+        return 'item not found',404
+    if record_object.records==[]:
+        return 'this list is empty',404
+    if isinstance(record_no,str):
+        return 'not applicable',404
+
+    if isinstance(record_no,int):
+
+        list_of_orders=record_object.delete_record(record_no)
+        if list_of_orders:
+            return jsonify({'message':'this record has been deleted successfully'}),200
+
+
+
+
+
+
+
+
