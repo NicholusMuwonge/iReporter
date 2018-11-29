@@ -22,10 +22,10 @@ class test_feature(unittest.TestCase):
     def test_record_creation(self):
         self.assertIsInstance(self.record, Record)
 
-    #def test_record_is_empty(self):
-      #  self.assertEqual(len(self.sample_records),0)
-       # self.record.add_record(self.sample_records)
-       # self.assertEqual(len(self.sample_records),1)
+    # def test_record_is_empty(self):
+    #     self.assertEqual(len(self.sample_records),0)
+    #     self.record.add_record(self.sample_records)
+    #     self.assertEqual(len(self.sample_records),1)
 
 
     def test_post_record(self):
@@ -36,14 +36,14 @@ class test_feature(unittest.TestCase):
 
 
     def test_get_all_records(self): 
-        # for record in self.record.records:
+        for record in self.record.records:
 
-        #     if record['record_no'] is None:
-        #              item=self.client.get('/api/v1/<int:record_no>')
-        #              self.assertEqual(item.status_code,204, msg='no item has been returned')
-        #     else:
-        item=self.client.get('/api/v1/records')
-        self.assertEqual(item.status_code,200)
+            if record['record_no'] is None:
+                    item=self.client.get('/api/v1/<int:record_no>')
+                    self.assertEqual(item.status_code,204, msg='no item has been returned')
+            else:
+                item=self.client.get('/api/v1/records')
+                self.assertEqual(item.status_code,200)
         
 
     
