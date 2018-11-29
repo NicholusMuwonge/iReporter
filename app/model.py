@@ -47,6 +47,16 @@ class Record:
         else:
             return('Input proper record_no'),204
 
+
+
+    def delete_record(self,record_no):
+        record_deleted=[record for record in self.records if record['record_no']==record_no]
+        if record_deleted:
+            
+
+            deleted_records=self.records.remove(record_deleted[0])
+            return (jsonify({'records':deleted_records}))
+
    
         
     
