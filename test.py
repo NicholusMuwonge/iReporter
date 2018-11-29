@@ -35,9 +35,19 @@ class test_feature(unittest.TestCase):
         #self.assertEqual(i.status_code,200)#to check if it was successfuly added to the list
 
 
-    def test_get_all_records(self):
+    def test_get_all_records(self): 
+        # for record in self.record.records:
+
+        #     if record['record_no'] is None:
+        #              item=self.client.get('/api/v1/<int:record_no>')
+        #              self.assertEqual(item.status_code,204, msg='no item has been returned')
+        #     else:
         item=self.client.get('/api/v1/records')
         self.assertEqual(item.status_code,200)
+        
+
+    
+     
 
 
 
