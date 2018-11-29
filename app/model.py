@@ -6,17 +6,58 @@ from random import randint
 
 
 class Record:
-    records=[]
+     #initialize record lists
+    def __init__(self):
+        self.records=[]
+    
 
     def   add_record(self,record):#record is the new redflag being created.
         """creating fields that will be returned automatically"""
         record['record_no']= int(len(self.records) + 1 )
         record['record_type']= 'Redflag_record'
+        self.records.append(record)
         return  record
 
 
+    def    get_all_orders(self):
+        return self.records
 
 
+    def update_record(self,record_no,record_geolocation):
+
+        update_record=[record for record in self.records if record['record_no']== record_no]
+        if update_record:
+            # update_record[0]['record_title']=record_title 
+            update_record[0]['record_geolocation']=record_geolocation
+            return update_record
+        else:
+            return ('this record doesnt exist')
+
+
+    def return_one(self,record_no):
+        if isinstance (record_no,int):
+
+        
+            for record in self.records:
+
+                if record["record_no"] == record_no: 
+                    return record
+
+                #return make_response(jsonify({'records':records}))
+        else:
+            return('Input proper record_no'),204
+
+
+
+    def delete_record(self,record_no):
+        record_deleted=[record for record in self.records if record['record_no']==record_no]
+        if record_deleted:
+            
+
+            deleted_records=self.records.remove(record_deleted[0])
+            return (jsonify({'records':deleted_records}))
+
+   
         
     
     
