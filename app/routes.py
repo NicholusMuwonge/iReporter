@@ -46,7 +46,7 @@ def return_all_records():
         return jsonify({'records':list_of_orders}),200
 
 
-@app.route('/api/v1/<int:record_no>', methods=['PUT'])
+@app.route('/api/v1/records/<int:record_no>', methods=['PUT'])
 def update_record(record_no):
     if isinstance (record_no,int):
 
@@ -60,7 +60,7 @@ def update_record(record_no):
 
 
 
-@app.route('/api/v1/<int:record_no>', methods=['GET'])
+@app.route('/api/v1/<int:record_no>/records', methods=['GET'])
 def return_one_only(record_no):
     if 'record_no'=='' or 'record_no' is None:
         return 'item not found',404
@@ -71,6 +71,21 @@ def return_one_only(record_no):
     list_of_orders=record_object.return_one(record_no)
     if list_of_orders:
         return jsonify({'record':list_of_orders}),200
+
+@app.route('/api/v1/<int:record_no>/records', methods=['DELETE'])
+def delete_record(record_no):
+    if 'record_no'=='' or 'record_no' is None:
+        return 'item not found',404
+    if record_object.records==[]:
+        return 'this list is empty',404
+    if isinstance(record_no,str):
+        return 'not applicable',404
+
+    if isinstance(record_no,int):
+
+        list_of_orders=record_object.delete_record(record_no)
+        if list_of_orders:
+            return jsonify({'message':'this record has been deleted successfully'}),200
 
 
 
