@@ -33,6 +33,20 @@ class Record:
         else:
             return ('this record doesnt exist')
 
+
+    def return_one(self,record_no):
+        if isinstance (record_no,int):
+
+        
+            for record in self.records:
+
+                if record["record_no"] == record_no: 
+                    return record
+
+                #return make_response(jsonify({'records':records}))
+        else:
+            return('Input proper record_no'),204
+
    
         
     
