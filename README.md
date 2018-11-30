@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.com/NicholusMuwonge/iReporter.svg?branch=ft-challenge-two)](https://travis-ci.com/NicholusMuwonge/iReporter)
-[![Coverage Status](https://coveralls.io/repos/github/NicholusMuwonge/iReporter/badge.svg)](https://coveralls.io/github/NicholusMuwonge/iReporter)
+[![Coverage Status](https://coveralls.io/repos/github/NicholusMuwonge/iReporter/badge.svg?branch=master)](https://coveralls.io/github/NicholusMuwonge/iReporter?branch=master)
 
 
 
