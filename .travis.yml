@@ -2,19 +2,19 @@
 language: python
 
 python:  
-  - "3.6.4"
+  - "3.7.1"
 
  
-install:
-  - "pip install -r requirements.txt"
-  - "pip install pytest pytest-cov"
-  - "pip install coveralls"
+before install:
+  - pip install -r requirements.txt
+  - pip install pytest pytest-cov
+  - pip install coveralls
   
   
  
   
 script:   
-  - py.test test.py 
+  - py.test  
 
 after_success:
   - coveralls
