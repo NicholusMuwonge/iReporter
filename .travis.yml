@@ -8,12 +8,12 @@ python:
 install:
   - "pip install -r requirements.txt"
   - "pip install coveralls"
-  - "pip install pytest pytest-cov"
-  - "pip install coveralls"
+  - "pip install pytest "
+  
  
   
 script:   
-  - pytest test.py
+  - py.test  --cov=app 
   - coverage report
  
 after_success:
