@@ -13,7 +13,8 @@ install:
  
   
 script:   
-  - pytest test.py
-   
+  - py.test  --cov-report term --cov=app
+  - coverage report
+     
 after_success:
   - coveralls
