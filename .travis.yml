@@ -13,7 +13,7 @@ install:
  
   
 script:   
-  - py.test 
+  - py.test test.py
   - coverage report
 
 after_success:
