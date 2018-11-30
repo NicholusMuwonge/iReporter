@@ -9,7 +9,7 @@ install:
  
   
 script:   
-  - - pytest -v --cov app --cov-report term-missing
+  - pytest test.py
   - coverage report
  
 after_success:
