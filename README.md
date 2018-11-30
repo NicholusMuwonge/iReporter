@@ -1,5 +1,9 @@
 [![Build Status](https://travis-ci.com/NicholusMuwonge/iReporter.svg?branch=ft-challenge-two)](https://travis-ci.com/NicholusMuwonge/iReporter)
 
+[![Coverage Status](https://coveralls.io/repos/github/NicholusMuwonge/iReporter/badge.svg?branch=master)](https://coveralls.io/github/NicholusMuwonge/iReporter?branch=master)
+
+
+
 # iREPORTER
 Its an application thats supposed to be used by some one to raise an issue to the authorities about corruption,and any other grievance to the authority.
 <table>
