@@ -13,7 +13,7 @@ install:
  
   
 script:   
-  - py.test  --cov-report term --cov=app test.py
+  - py.test  --cov=app
   - coverage report
 
 after_success:
