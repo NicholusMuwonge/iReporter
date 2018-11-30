@@ -13,8 +13,7 @@ install:
  
   
 script:   
-  - py.test test.py --cov=app
-  - coverage report
+  - py.test test.py --with-coverage  --cover-package=app
 
 after_success:
   - coveralls
