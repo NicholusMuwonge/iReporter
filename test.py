@@ -44,6 +44,38 @@ class test_feature(unittest.TestCase):
             else:
                 item=self.client.get('/api/v1/records')
                 self.assertEqual(item.status_code,200)
+
+    def test_get_one_record(self):
+        for record in self.record.records:
+
+            if record['record_no'] is None:
+                item=self.client.get('/api/v1/<int:record_no>/records')
+                self.assertEqual(item.status_code,204, msg='no item has been returned')
+            else:
+                item=self.client.get('/api/v1/<int:record_no>/records')
+                self.assertEqual(item.status_code,200,msg='It hasnt been displayed')
+
+
+
+    def test_modify_record(self):
+        for record in self.record.records:
+            if record['record_no'] is not None:
+                item=self.client.post('/api/v1/<int:record_no>',data=json.dumps(self.sample_records), content_type=('application/json'))
+                self.assertEqual(item.status_code,201)
+            else:
+                item=self.client.get('/api/v1/<int:record_no>/records')
+                self.assertEqual(item.status_code,404)
+    
+    def test_delete_post(self):
+        for record in self.record.records:
+            if record['record_no'] is None:
+                item=self.client.get('/api/v1/<int:record_no>/records')
+                self.assertEqual(item.status_code,404)
+            else:
+                item=self.client.delete('/api/v1/<int:record_no>/records')
+                self.assertEqual(item.status_code,200)
+
+
         
 
     
