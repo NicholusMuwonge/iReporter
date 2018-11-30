@@ -7,13 +7,14 @@ python:
  
 install:
   - "pip install -r requirements.txt"
+  - "pip install pytest pytest-cov"
   - "pip install coveralls"
   
   
  
   
 script:   
-  - py.test test.py app
+  - py.test test.py 
 
 after_success:
   - coveralls
