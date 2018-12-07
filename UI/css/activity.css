@@ -9,14 +9,17 @@ body,html
 form
 {
    
-    background-color:rgb(119, 139, 139); /* Black w/opacity/see-through */
-    margin-left: 20%;
+    /*background-color:rgb(119, 139, 139); /* Black w/opacity/see-through */
+    /*background-image:url=('images/paper.jpg');*/
+    margin-left: 10%;
     font-weight: bold;
     border: 0.51px solid grey;
     height: -16px;
     width: 50%;
     padding: 30px;
-    text-align: center;
+    text-align: none;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius:7px;
     
     
 }
@@ -24,27 +27,31 @@ header
 {
     position: fixed;
     width: 100%;
-	height: 60px;
-	background-color: #222;
+    height: 60px;
+    background-color:;
+    background-image: image("images/face.jpeg");
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.01);
-    border:yellow solid 1px;
+    border-bottom-style:darkgrey solid 1px;
+    border-radius:0px; 
 }
 .first
 {
     width: 900px;
-	float: left;
-	text-align: right;
-	color: #fff;
-	font-size: 17px;
-	height: 80px;
-	list-style: none;
+    float: left;
+    text-align: right;
+    color: #fff;
+    font-size: 17px;
+    height: 80px;
+    list-style: none;
+    margin-top: 0; 
 	margin-top: 0; 
+    margin-top: 0; 
 }
 .first li
 {
     float: left;
-	padding:10px;
-	text-transform: capitalize;
+    padding:10px;
+    text-transform: capitalize;
 }
 .first li:last-child
 {
@@ -54,66 +61,66 @@ header
 .first li ul
 {
     height: 150px;
-	display: none;
-	float: left;
-	list-style: none;
-	background-color: #333;
-	
+    display: none;
+    float: left;
+    list-style: none;
+    background-color: #333;
+    
 }
 
 .first a
 {
     color: rgb(182, 182, 183);
-	text-decoration: none !important;
-	float: left;
+    text-decoration: none !important;
+    float: left;
 }
 
 .first li:hover
 {
-    background-color: rgb(112, 111, 99);
+    background-color: darkmagenta;
     border-bottom-color: aqua;
 }
 
-p
+/*p
 {
     font-style: oblique;
     top: 20%;
     color: antiquewhite;
-}
+}*/
 .five{margin-top: 10%;
     position:unset;
     color: antiquewhite;
 }
 
 .e  {
-	cursor: pointer;
-	margin-top: -8px;
-	width: 10%;
-	margin-bottom: -15px;
-	color:thistle;
-	border: 1px solid black;
-	height: 40px;
-	background-color:black;
-	padding: 3px;
-	text-align: center;
-	border-radius:7px;
-    margin-left: -180px;
+    cursor: pointer;
+    margin-top: -15%;
+    width: 10%;
+    margin-bottom: -15px;
+    color:thistle;
+    border: 1px solid black;
+    height: 40px;
+    background-color:black;
+    padding: 3px;
+    text-align: center;
+    border-radius:7px;
+    margin-left: 500px;
     text-decoration: none;
-    opacity: -0.5px;
+    opacity: -100px;
 }
 #find{
-	cursor: pointer;
-	margin-top: -40px;
-	width: 10%;
-	margin-bottom: -7px;
-	color:gold;
-	border: 1px solid black;
-	height: 40px;
-	background-color:gold palevioletred;
-	padding: 3px;
-	text-align: center;
-	border-radius:7px;
-	margin-left: 300px;
+    cursor: pointer;
+    margin-top: -40px;
+    width: 10%;
+    margin-bottom: -7px;
+    color:gold;
+    border: 1px solid black;
+    height: 40px;
+    background-color:gold palevioletred;
+    padding: 3px;
+    text-align: center;
+    border-radius:7px;
+    margin-left: 300px;
 }
 button
 {
@@ -126,12 +133,84 @@ button
 
 }
 h2{
-    color: antiquewhite;
+    color: rgb(252, 239, 64);
     
 }
 h1{
     color: burlywood;
-    margin-left: 90%;
+    margin-left: 75%;
     font-size: 13px;
+    margin-top: -10%;
+}
 
+#w
+{
+    margin-left: -3%;
+    margin-top: -90px;
+}
+#q{ margin-top: -7%;
+    margin-left: 100px;
+
+}
+
+#l{
+    margin-top: 70%;
+    text-align: center;
+}
+
+#y{
+    width: 100%;
+}
+
+#t{
+    
+    margin-left: 40%;
+    color: lightcoral;
+}
+h3{
+    margin-top: -4%;
+    color: lightcoral;
+}
+h
+{
+    margin-left: -20%;
+}
+
+#z{
+    size: -100%;
+    padding: -100%;
+    width: 40px;
+    margin-top: -10px;
+}
+
+table{
+    table-layout: auto;
+}
+table a {
+	color: #fff;
+}
+table a:hover {
+	text-decoration: underline;
+}
+table td, table th {
+	padding-left: 10px;
+}
+table tr:nth-of-type(even) {
+	height: 35px;
+	background-color: whitesmoke;
+}
+table tr:nth-of-type(odd) {
+	height: 35px;
+	background-color: whitesmoke;
+}
+
+#table
+{
+    width: 340px;
+    margin-left: 68%;
+    margin-top: -170%;
+    position: fixed;
+    border-radius: 8px;
+    height: 30%;
+    background-color:lightgrey;
 }
