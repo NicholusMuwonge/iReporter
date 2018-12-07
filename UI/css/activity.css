@@ -28,7 +28,7 @@ header
     position: fixed;
     width: 100%;
     height: 60px;
-    background-color:;
+    background-color:none;
     background-image: image("images/face.jpeg");
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.01);
     border-bottom-style:darkgrey solid 1px;
@@ -208,7 +208,7 @@ table tr:nth-of-type(odd) {
 {
     width: 340px;
     margin-left: 68%;
-    margin-top: -170%;
+    margin-top: -230%;
     position: fixed;
     border-radius: 8px;
     height: 30%;
