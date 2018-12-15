@@ -1,100 +1,67 @@
-from flask import Flask,json,jsonify,make_response,request
-from random import randint
+
+""" creating users """
+class User_class:
 
 
-
-
-
-class Record:
-     #initialize record lists
     def __init__(self):
-        self.records=[]
-    
-
-    def   add_record(self,record):#record is the new redflag being created.
-        """creating fields that will be returned automatically"""
-        record['record_no']= int(len(self.records) + 1 )
-        record['record_type']= 'Redflag_record'
-        self.records.append(record)
-        return  record
-
-
-    def    get_all_orders(self):
-        return self.records
-
-
-    def update_record(self,record_no,record_geolocation):
-
-        update_record=[record for record in self.records if record['record_no']== record_no]
-        if update_record:
-            # update_record[0]['record_title']=record_title 
-            update_record[0]['record_geolocation']=record_geolocation
-            return update_record
-        else:
-            return ('this record doesnt exist')
-
-
-    def return_one(self,record_no):
-        if isinstance (record_no,int):
-
+        #,user_name,user_password,sign_up_date,email,phone_number,registered_date,user_type,user_id,user_list:
+        self.user_name=None
+        self.user_password=None
+        self.email=None
+        self.user_id= 0
+        #self.sign_up_date=None
+        self.registered_date=None
+        self.phone_number=None
+        self.user_type=True
+        self.increment=self.user_id+1 
         
-            for record in self.records:
-
-                if record["record_no"] == record_no: 
-                    return record
-
-                #return make_response(jsonify({'records':records}))
-        else:
-            return('Input proper record_no'),204
-
-
-
-    def delete_record(self,record_no):
-        record_deleted=[record for record in self.records if record['record_no']==record_no]
-        if record_deleted:
-            
-
-            deleted_records=self.records.remove(record_deleted[0])
-            return (jsonify({'records':deleted_records}))
-
-   
+        self.user_list=[]
         
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    """
-    data=request.json
-    records1={'record_title':data.get('record_title'),'record_type':data.get('record_type'),'record_geoloc':data.get('record_geoloc'),'record_no':data.get('record_no')}
-    records.append(records1)
-    return jsonify({'records':records}),201
-"""
 
 
-"""
-if len(records)==0:
-        record_no=1
-        records={'record_title':request.json['record_title'],'record_type':request.json['record_type'],'record_geoloc':request.json['record_geoloc'],'record_no':record_no}
 
-    if len(records)==0:
-        record_no=1
+    def user_id_setting(self,user_id):
+        for user_id in self.user_list :
+            if self.user_id != 1 and self.user_id >1:
+                new_user_id=user_id+1
+                return int(new_user_id)
 
-    else:
-        item=records[len(records)-1]
-        t=int(item(['record_no']))
-        new_record=t+1
-        records={'record_title':request.json.get['record_title'],'record_type':request.json.get['record_type'],'record_geoloc':request.json['record_geoloc'],'record_no':new_record}
-"""
+    def user_type_setting(self,user_type):
+        if user_type !=True:
+            return 'Admin'
+        else:
+            return 'User'
+        
+    def user_password_setting(self,user_password):
+        self.user_password=input('')
+        for digit in self.user_password:
+            if not isinstance (digit,str): #or if len(self.user_password) =< 5 :
+                return "create another password that may contain both words and numbers",400
+
+            if len(self.user_password) < 5 and len(self.user_password)>13:
+                return "improve your password",400
+
+          
+
+    def user_mail_setting(self,email):
+        item=input ("")
+        for i in email:
+            if '@' and '.com' in email:
+                continue
+            elif i[email] == ('xxxxx'+'@'+'xx'+ '.com'):
+                continue
+            else:
+                'Invalid email'
+        return item        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  

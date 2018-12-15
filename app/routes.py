@@ -1,6 +1,12 @@
 from flask import Flask,json,jsonify,request,make_response #MethodView,view_functions
-from .model import Record
+from .controller import Record
 from app import creat_app
+from flask import Flask,json,jsonify,request,make_response #MethodView,view_functions
+from .controller import User,User_class
+import uuid
+import jwt
+from werkzeug.security import check_password_hash
+import datetime
 
 record_object=Record() #create a record object.
 
@@ -8,7 +14,10 @@ record_object=Record() #create a record object.
 """ we name the app,(create an instance of flask)"""
 
 app=creat_app()
+user_object=User()
+i=User_class()
 
+""" route for the home"""
 
 @app.route('/')
 def home():
@@ -86,6 +95,73 @@ def delete_record(record_no):
         list_of_orders=record_object.delete_record(record_no)
         if list_of_orders:
             return jsonify({'message':'this record has been deleted successfully'}),200
+
+
+@app.route('/api/v1/users/signup', methods=['POST'])
+def create_user():
+    
+    if request.method == 'POST':
+        existing_user=user_object.fetch_all_users()
+        result = request.data
+        data=json.loads(result)
+        
+        if not data:
+            return jsonify({'error': 'unsupported Request'}), 400
+        elif 'user_name' not in data:
+            return jsonify({'error': 'username is requred'}), 400
+        elif 'user_password' not in data:
+            return jsonify({'error': 'password is required'}), 400
+        elif 'email' not in data:
+            return jsonify({'error':'email is missing'}),400
+        
+
+        user_name=data["user_name"]
+        user_password=data['user_password']
+        email=data['email']
+        user_id=i.increment
+        registered_date=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        user_type= 'user'
+        
+        # item=i.user_password_setting(user_password)
+        for user in existing_user:
+            if user['user_name']==user_name or user['email']==email:
+                return jsonify({'message':'the user exists'}),400
+        if len(data['user_name']) is 0 or len(data['user_password']) is 0:
+            return jsonify({"message": "fill in missing fields"}), 400
+
+        elif len(data['user_password'])<5 or len(data['user_password'])>13 :
+            # for user in i.user_list:
+            #     if len(user['user_password']) is <5 or :
+            password_check={'message':'improve password strength'}
+            return jsonify(password_check)
+        # elif data['email'] == email:
+        #     return jsonify({'message':'user_already exists'}),400
+        
+
+            
+        else:
+            
+            #phone_number=data['phone_number']
+            
+            
+            
+            user_object.register_user(user_name,user_password,email,user_type,registered_date,user_id)
+            return jsonify({'Message': 'New user registered successfully'}), 201
+
+
+
+@app.route("/api/v1/users",methods=["GET"])
+def fetch_all_users():
+    new_users_lists=user_object.fetch_all_users()
+  
+    return jsonify({ 'users':new_users_lists}),200
+
+
+@app.route("/api/v1/users/login", methods=['POST'])
+def login():
+    cheker=user_object.login_user()
+    return (cheker)
+
 
 
 
