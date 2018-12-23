@@ -7,6 +7,7 @@ import uuid
 import jwt
 from werkzeug.security import check_password_hash
 import datetime
+import re
 
 record_object=Record() #create a record object.
 
@@ -101,7 +102,7 @@ def delete_record(record_no):
 def create_user():
     
     if request.method == 'POST':
-        existing_user=user_object.fetch_all_users()
+        existing_user=user_object.user_list
         result = request.data
         data=json.loads(result)
         
@@ -118,14 +119,14 @@ def create_user():
         user_name=data["user_name"]
         user_password=data['user_password']
         email=data['email']
-        user_id=i.increment
+        user_id=int(len(i.user_list))+1
         registered_date=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         user_type= 'user'
         
         # item=i.user_password_setting(user_password)
         for user in existing_user:
             if user['user_name']==user_name or user['email']==email:
-                return jsonify({'message':'the user exists'}),400
+                return jsonify ({'message':'the user exists'}),400
         if len(data['user_name']) is 0 or len(data['user_password']) is 0:
             return jsonify({"message": "fill in missing fields"}), 400
 
@@ -134,8 +135,10 @@ def create_user():
             #     if len(user['user_password']) is <5 or :
             password_check={'message':'improve password strength'}
             return jsonify(password_check)
-        # elif data['email'] == email:
-        #     return jsonify({'message':'user_already exists'}),400
+
+        elif (data['email']) is i.user_mail_setting:
+            return jsonify({'message':'invalid_email_format'})
+        
         
 
             

@@ -1,4 +1,4 @@
-
+import re
 """ creating users """
 class User_class:
 
@@ -9,7 +9,6 @@ class User_class:
         self.user_password=None
         self.email=None
         self.user_id= 0
-        #self.sign_up_date=None
         self.registered_date=None
         self.phone_number=None
         self.user_type=True
@@ -43,16 +42,11 @@ class User_class:
 
           
 
-    def user_mail_setting(self,email):
-        item=input ("")
-        for i in email:
-            if '@' and '.com' in email:
-                continue
-            elif i[email] == ('xxxxx'+'@'+'xx'+ '.com'):
-                continue
-            else:
-                'Invalid email'
-        return item        
+    def user_mail_setting(self,email) -> bool :
+      email_pattern=re.compile(r"^[A-Za-z0-9.+_-]+@[A-Za-z0-9._-]+\.[a-zA-Z]*$")
+      if email_pattern:
+          return True
+      return False
     
     
     

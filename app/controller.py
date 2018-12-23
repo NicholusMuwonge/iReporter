@@ -76,16 +76,18 @@ class User:
 
         for user in new_user:
             user={}
-            # if user['user_name']==user_name:
-            #     return 'user already exists'
+            
             
             user['user_name']=user_name
-            user['user_password']=(generate_password_hash(class_object.user_password,method='sha256'))
+            user['user_password']=(generate_password_hash(class_object.user_password,method='sha256') ) 
             user['email']=email
             user['user_id']=class_object.increment
             user['registered_date']=registered_date
             user['user_type']=user_type
+
+            
             self.user_list.append(user)
+            # del User_class.user_password
             return jsonify(new_user)
 
     def fetch_all_users(self):
