@@ -16,7 +16,7 @@ install:
   
 script:   
   - py.test  test.py 
-  - coverage report
+  # - coverage report
   - coveralls
 
 after success:
