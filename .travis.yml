@@ -15,8 +15,9 @@ install:
  
   
 script:   
+  - pytest --cov
   - py.test  test.py 
-  # - coverage report
+  - coverage report
   - coveralls
 
 after success:
