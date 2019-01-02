@@ -14,6 +14,21 @@ class test_feature(unittest.TestCase):
         'record_type':'redflag',
         'record_geolocation':'000003445N 22222228S'
         }
+        self.sample_list = [{'record_no':1,
+        'record_title':'One',
+        'record_type':'redflag',
+        'record_geolocation':'000003445N 22222228S'
+        },{'record_no':1,
+        'record_title':'two',
+        'record_type':'redflag',
+        'record_geolocation':'00785949N 6666666S'
+        }]
+        self.empty_fields = {'record_no':1,
+        'record_title':'',
+        'record_type':'redflag',
+        'record_geolocation':''
+        }
+        self.empty_list=[]
         self.user={'user_name':"Nicks",'user_password':"nicholas","email":"nicklaus@home.com","user_id":1}
         self.object=User_class()
         self.controller=User()
@@ -26,40 +41,72 @@ class test_feature(unittest.TestCase):
     def test_record_creation(self):
         self.assertIsInstance(self.record, Record)
 
-    # def test_record_is_empty(self):
-    #     self.assertEqual(len(self.sample_records),0)
-    #     self.record.add_record(self.sample_records)
-    #     self.assertEqual(len(self.sample_records),1)
+    def post_record(self,record_no,record_title,record_geolocation,record_type):
+        data_to_be_posted=self.client.post('/api/v1/records',data=json.dumps(self.sample_records), content_type=('application/json'))
+        return data_to_be_posted
 
 
     def test_post_record(self):
         i=self.client.post('/api/v1/records',data=json.dumps(self.sample_records), content_type=('application/json'))
+        post_response = json.loads(i.data.decode())
         self.assertEqual(i.status_code,201)
-        # self.assertEqual(i.content_type,'json')#check if it was successfully created
+        self.assertTrue(i.content_type, 'application/json')
+        self.assertTrue(post_response['message'], 'record created successfully')
+        self.assertTrue(post_response['record'])
+        
        # i=self.client.get('/ft/v1/orders')
         #self.assertEqual(i.status_code,200)#to check if it was successfuly added to the list
 
+    def test_invalid_post(self):
+        i=self.client.post('/api/v1/records',data=json.dumps(self.empty_fields), content_type=('application/json'))
+        post_response = json.loads(i.data.decode())
+        self.assertEqual(i.status_code,400)
+        self.assertTrue(i.content_type, 'application/json')
+        self.assertTrue(post_response['message'], 'fill in these fields')
+      
+
 
     def test_get_all_records(self): 
-        for record in self.record.records:
+        # for record in self.record.records:
+        self.list=self.record.get_all_orders()
 
-            if record['record_no'] is None:
-                    item=self.client.get('/api/v1/<int:record_no>')
-                    self.assertEqual(item.status_code,204, msg='no item has been returned')
-            else:
+        if not self.list:
                 item=self.client.get('/api/v1/records')
-                self.assertEqual(item.status_code,200)
+                # response_data= json.loads(item.data.decode())
+                self.assertEqual(item.status_code,204, msg='no item has been returned')
+                self.assertTrue(item.content_type, 'application/json')
+                # self.assertTrue(response_data['message'],'This list is empty')
+                
+
+        else:
+            item=self.client.get('/api/v1/records')
+            # response_data= json.loads(item.data.decode())
+            self.assertTrue(item.content_type, 'application/json')
+            self.assertEqual(item.status_code,200)
+            
+            # self.assertTrue(response_data['message'],'What you requested for')
+            # self.assertTrue(response_data['records'])
+            # self.assertIsInstance(response_data['record_no'],int)
 
     def test_get_one_record(self):
         for record in self.record.records:
 
             if record['record_no'] is None:
                 item=self.client.get('/api/v1/<int:record_no>/records')
-                self.assertEqual(item.status_code,204, msg='no item has been returned')
+                # post_response = json.loads(item.data.decode())
+                self.assertEqual(item.status_code,404, msg='no item has been returned')
+                # self.assertTrue(post_response['message'],'item not found')
             else:
                 item=self.client.get('/api/v1/<int:record_no>/records')
                 self.assertEqual(item.status_code,200,msg='It hasnt been displayed')
 
+    # def test_get_one_from_list_that_doesnt_exist(self):
+    #     item=self.post_record(2,'rails','454663m','intervention')
+
+    #     request_data = self.client.get('/api/v1/5/records')
+    #     response_data = json.loads(item.data.decode())
+    #     self.assertTrue(response_data['message'], 'item not found')
+    #     self.assertEqual(request_data.status_code, 404)
 
 
     def test_modify_record(self):
@@ -70,6 +117,37 @@ class test_feature(unittest.TestCase):
             else:
                 item=self.client.get('/api/v1/<int:record_no>/records')
                 self.assertEqual(item.status_code,404)
+
+    def test_update_record(self):
+        self.post_record(3,'truce','2733883N 899000N','Redflag')
+        request_data= self.client.put('/api/v1/records/3',
+            data=json.dumps(dict(
+                record_geolocation="0000000N 777777S"
+            )),
+            content_type='application/json'
+        )
+
+        response_data = json.loads(request_data.data.decode())
+        self.assertTrue(response_data['message'], 'Record updated')
+        self.assertTrue(request_data.content_type, 'application/json')
+        self.assertEqual(request_data.status_code, 201)
+
+    def test_update_non_existent_record(self):
+        self.post_record(3,'truce','2733883N 899000N','Redflag')
+        request_data= self.client.put('/api/v1/records/25',
+            data=json.dumps(dict(
+                record_geolocation="0000000N 777777S"
+            )),
+            content_type='application/json'
+        )
+
+        response_data = json.loads(request_data.data.decode())
+        self.assertTrue(response_data['message'], 'record doesnt exist')
+        self.assertTrue(request_data.content_type, 'application/json')
+        # self.assertEqual(request_data.status_code, 400)
+
+    
+
     
     def test_delete_post(self):
         for record in self.record.records:
