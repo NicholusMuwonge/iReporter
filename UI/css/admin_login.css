@@ -7,18 +7,7 @@ body {
 	
 }
 
-.container {
 
-	margin-left: auto;
-	margin-right: auto;
-	padding: 20px;
-	background-color: #fefefe;
-	width: 500px;
-	color: #fff;
-	min-height: 300px;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-	border-radius: 4px;
-}
 
 .top-padding{
 	margin-top: 10%;
@@ -56,7 +45,8 @@ select{
 	border: 1px solid #ddd;
 	border-radius:7px;
 }
-input[type="text"], input[type="email"], input[type="password"], input[type="number"] {
+input[type="text"], input[type="email"], input[type="password"], input[type="number"] 
+{
 	border-radius:7px; 
 	width: 100%;
 	margin-bottom: 10px;
@@ -67,28 +57,46 @@ input[type="text"], input[type="email"], input[type="password"], input[type="num
 	border: 1px solid #ddd;
 }
 input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
-	border-color: #14B9D6;
+	border: #14B9D6 1px solid;
 	border-radius:7px;
 	padding: 5px;
 	outline: none;
-	border: 1px solid #ddd;
+	
 	border-radius:7px;
+	background-color: aliceblue;
 }
 button {
 	cursor: pointer;
 	margin-top: 10px;
 	width: 103%;
 	margin-bottom: 10px;
-	color: #fff;
-	border: 0px solid;
+	color:darkcyan;
+	border: darkslategray 0.4px solid;
 	height: 40px;
-	background-color:gold ;
+	background-color:lightgrey ;
 	padding: 5px;
 	text-align: center;
 	border-radius:7px;
 }
 
- 
+form
+{
+	background-color: white; 
+  color:brown;
+  font-weight: bold;
+  border: 2px solid grey;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;
+  padding: 7px;
+  text-align: center;
+  border-radius: 7px;
+  margin-left: 6%;
+  height:450px;
+  background-image: url(images/glass.jpg)
+}
 
 
 
