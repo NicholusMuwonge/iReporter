@@ -174,7 +174,7 @@ class test_feature(unittest.TestCase):
         response_data=json.loads(request_data.data.decode())
         self.assertEqual(request_data.status_code,201)
         self.assertTrue(request_data.content_type, 'application/json')
-        # self.assertTrue(response_data['Message'],'New user registered successfully')
+        self.assertTrue(response_data['Message'],'New user registered successfully')
 
         
     
