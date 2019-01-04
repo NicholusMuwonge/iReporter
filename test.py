@@ -3,6 +3,7 @@ import unittest
 from app.controller import Record,User
 from app.routes import app,create_user
 from app.model import User_class
+from app import app
 
 class test_feature(unittest.TestCase):
     @classmethod
@@ -29,10 +30,11 @@ class test_feature(unittest.TestCase):
         'record_geolocation':''
         }
         self.empty_list=[]
-        self.user={'user_name':"Nicks",'user_password':"nicholas","email":"nicklaus@home.com","user_id":1}
+        self.user={'user_name':'user_name','user_password':'user_password',"email":'email',"user_id":'user_id'}
         self.object=User_class()
         self.controller=User()
-        self.client=app.test_client()
+        self.app=app
+        self.client=self.app.test_client()
     
     @classmethod
     def tearDown(self):
@@ -101,10 +103,10 @@ class test_feature(unittest.TestCase):
                 self.assertEqual(item.status_code,200,msg='It hasnt been displayed')
 
     # def test_get_one_from_list_that_doesnt_exist(self):
-    #     item=self.post_record(2,'rails','454663m','intervention')
+    #     self.item=({'record_no':2,'record_title':'rails','record_geolocation':'454663m','record_type':'intervention'})
 
-    #     request_data = self.client.get('/api/v1/5/records')
-    #     response_data = json.loads(item.data.decode())
+    #     request_data = self.client.get('/api/v1/5/records',data=json.dumps(self.item), content_type=('application/json'))
+    #     response_data = json.loads(request_data.data.decode())
     #     self.assertTrue(response_data['message'], 'item not found')
     #     self.assertEqual(request_data.status_code, 404)
 
@@ -157,6 +159,25 @@ class test_feature(unittest.TestCase):
             else:
                 item=self.client.delete('/api/v1/<int:record_no>/records')
                 self.assertEqual(item.status_code,200)
+
+
+
+
+                """ users tests"""
+    def post_user(self,user_name,user_password,email,user_id):
+        data_to_be_posted=self.client.post('/api/v1/users',data=json.dumps(self.user), content_type=('application/json'))
+        return data_to_be_posted
+
+    def test_post_user(self):
+        # post=self.post_user('ncncn','djjdjd','hdhhd@gmail.com',2)
+        request_data=self.client.post('/api/v1/users/signup',data=json.dumps(self.user),content_type=('application/json'))
+        response_data=json.loads(request_data.data.decode())
+        self.assertEqual(request_data.status_code,201)
+        self.assertTrue(request_data.content_type, 'application/json')
+        # self.assertTrue(response_data['Message'],'New user registered successfully')
+
+        
+    
 """
     def test_get_all_users(self):
         if self.object.user_list==[]:
