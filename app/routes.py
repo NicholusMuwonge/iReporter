@@ -49,7 +49,7 @@ def post_record():
 
 @app.route('/api/v1/records', methods=['GET'])
 def return_all_records():
-    list_of_orders=record_object.get_all_orders()
+    list_of_orders=record_object.get_all_records()
     if list_of_orders:
         response_object={'message':'all retrieved','records':list_of_orders}
         return jsonify(response_object),200

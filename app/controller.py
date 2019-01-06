@@ -24,7 +24,7 @@ class Record:
         return  record
 
 
-    def    get_all_orders(self):
+    def    get_all_records(self):
         return self.records
 
 

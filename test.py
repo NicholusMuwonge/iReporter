@@ -70,7 +70,7 @@ class test_feature(unittest.TestCase):
 
     def test_get_all_records(self): 
         # for record in self.record.records:
-        self.list=self.record.get_all_orders()
+        self.list=self.record.get_all_records()
 
         if not self.list:
                 item=self.client.get('/api/v1/records')
