@@ -3,5 +3,5 @@
 [run]
 
 omit =
-    virtualenv/*
-    home/*
+    
+    */home/*
