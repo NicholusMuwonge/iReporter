@@ -1,5 +1,11 @@
 [![Build Status](https://travis-ci.com/NicholusMuwonge/iReporter.svg?branch=ft-challenge-two)](https://travis-ci.com/NicholusMuwonge/iReporter)
 [![Coverage Status](https://coveralls.io/repos/github/NicholusMuwonge/iReporter/badge.svg?branch=ft-challenge-two&service)](https://coveralls.io/github/NicholusMuwonge/iReporter?branch=ft-challenge-two)
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/95c6a67ee8716ddebf6b/maintainability)](https://codeclimate.com/github/NicholusMuwonge/iReporter/maintainability)
+
+
+
+
 ### About
 <strong>IREPORTER<strong> is an application thats supposed to be used by some one to raise an issue to the authorities about corruption,and any other grievance to the authority.
 
