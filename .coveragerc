@@ -1,4 +1,6 @@
 [report]
+
+[run]
 show_missing = True
 omit =
     virtualenv/*
