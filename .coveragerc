@@ -4,4 +4,4 @@
 
 omit =
     
-    */home/*
+    */virtualenv/*
