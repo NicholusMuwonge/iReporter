@@ -42,7 +42,7 @@ class User_class:
 
           
 
-    def user_mail_setting(self,email) -> bool :
+    def user_mail_setting(self,email)  :
       email_pattern=re.compile(r"^[A-Za-z0-9.+_-]+@[A-Za-z0-9._-]+\.[a-zA-Z]*$")
       if email_pattern:
           return True
