@@ -204,10 +204,10 @@ class test_feature(unittest.TestCase):
             self.assertEqual(request_data.status_code,200)
             self.assertTrue(request_data.content_type, 'application/json')
 
-        else:
-            request_data=self.client.get('/api/v1/users',content_type='application/json')
-            self.assertEqual(request_data.status_code,204)
-            self.assertTrue(request_data.content_type, 'application/json')
+        # else:
+        #     request_data=self.client.get('/api/v1/users',content_type='application/json')
+        #     self.assertEqual(request_data.status_code,204)
+        #     self.assertTrue(request_data.content_type, 'application/json')
 
 
     # def test_missing_fields_login(self):
