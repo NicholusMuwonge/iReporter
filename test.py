@@ -199,7 +199,7 @@ class test_feature(unittest.TestCase):
     def test_get_all_users(self):
         self.list=self.controller.fetch_all_users()
         if self.list :
-            self.post_user('nicholas','nicksbro','nicks@gmail.com',1)
+            # self.post_user('nicholas','nicksbro','nicks@gmail.com',1)
             request_data=self.client.get('/api/v1/users',content_type='application/json')
             self.assertEqual(request_data.status_code,200)
             self.assertTrue(request_data.content_type, 'application/json')
