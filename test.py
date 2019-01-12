@@ -195,7 +195,7 @@ class test_feature(unittest.TestCase):
         self.assertEqual(request_data.status_code,204)
         self.assertTrue(request_data.content_type, 'application/json')
 
-
+    # test to fetch all users
     def test_get_all_users(self):
         self.list=self.controller.fetch_all_users()
         if self.list :
