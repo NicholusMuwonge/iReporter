@@ -92,10 +92,7 @@ class User:
 
     def fetch_all_users(self):
         users = self.user_list
-        if users !=[]:
-            return jsonify(users),200
-        else:
-            return jsonify({'message':'no user found'}),404
+        return users
 
 
     def login_user(self):

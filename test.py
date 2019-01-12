@@ -1,7 +1,7 @@
 from flask import Flask,json,jsonify
 import unittest
 from app.controller import Record,User
-from app.routes import app,create_user
+from app.routes import app,create_user,fetch_all_users
 from app.model import User_class
 from app import app
 
@@ -40,12 +40,14 @@ class test_feature(unittest.TestCase):
     def tearDown(self):
         print ('Teardown')
 
-    def test_record_creation(self):
-        self.assertIsInstance(self.record, Record)
-
     def post_record(self,record_no,record_title,record_geolocation,record_type):
         data_to_be_posted=self.client.post('/api/v1/records',data=json.dumps(self.sample_records), content_type=('application/json'))
         return data_to_be_posted
+
+    def test_record_creation(self):
+        self.assertIsInstance(self.record, Record)
+
+    
 
     def test_home(self):
         index=self.client.get('/',content_type='application/json')
@@ -188,6 +190,26 @@ class test_feature(unittest.TestCase):
         self.assertTrue(request_data.content_type, 'application/json')
         # self.assertTrue(response_data['message'],'you are successfully loged in')
 
+    def test_get_all_users_in_empty_list(self):
+        request_data=self.client.get('/api/v1/users',content_type='application/json')
+        self.assertEqual(request_data.status_code,204)
+        self.assertTrue(request_data.content_type, 'application/json')
+
+
+    def test_get_all_users(self):
+        self.list=self.controller.fetch_all_users()
+        if self.list :
+            self.post_user('nicholas','nicksbro','nicks@gmail.com',1)
+            request_data=self.client.get('/api/v1/users',content_type='application/json')
+            self.assertEqual(request_data.status_code,200)
+            self.assertTrue(request_data.content_type, 'application/json')
+
+        else:
+            request_data=self.client.get('/api/v1/users',content_type='application/json')
+            self.assertEqual(request_data.status_code,204)
+            self.assertTrue(request_data.content_type, 'application/json')
+
+
     # def test_missing_fields_login(self):
     #     # self.post_user('nicholas','nicksbro','nicks@gmail.com',1)
     #     request_data=self.client.post('/api/v1/users/login',data=json.dumps(dict(email='kkkkk',user_password='')),content_type=('application/json'))
@@ -206,27 +228,7 @@ class test_feature(unittest.TestCase):
 
         
     
-"""
-    def test_get_all_users(self):
-        if self.object.user_list==[]:
 
-            item=self.client.get('/api/v1/users')
-            self.assertEqual(item.status_code,404, msg='no item has been returned')
-
-        
-        else:
-            item=self.client.get('/api/v1/users')
-            self.assertEqual(item.status_code,200,msg='The list has items')
-
-    def test_user_signup(self,user_name,user_password,email,user_type,registered_date,user_id):
-        for user in self.object.user_list:
-            if user["user_name"] or user["user_password"]  is None:
-                item=create_user()
-                self.assertWarns(item['message'],"fill in missing fields")
-"""
-
-
-        
 
     
      

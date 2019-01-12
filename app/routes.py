@@ -166,8 +166,14 @@ def create_user():
 @app.route("/api/v1/users",methods=["GET"])
 def fetch_all_users():
     new_users_lists=user_object.fetch_all_users()
-  
-    return (new_users_lists)
+    if new_users_lists:
+        response_object={'message':'all retrieved','user':new_users_lists}
+        return jsonify(response_object),200
+    else:
+        
+        response_object=('no users to display')
+        return jsonify(response_object),204
+    # return (new_users_lists)
 
 
 @app.route("/api/v1/users/login", methods=['POST'])
