@@ -81,7 +81,7 @@ class User:
             user['user_name']=user_name
             user['user_password']=(generate_password_hash(class_object.user_password,method='sha256') ) 
             user['email']=email
-            user['user_id']=class_object.increment
+            user['user_id']=int(len(self.user_list))+1
             user['registered_date']=registered_date
             user['user_type']=user_type
 
@@ -92,8 +92,8 @@ class User:
 
     def fetch_all_users(self):
         users = self.user_list
-        if users != []:
-            return users ,200
+        if users !=[]:
+            return jsonify(users),200
         else:
             return jsonify({'message':'no user found'}),404
 
@@ -101,17 +101,22 @@ class User:
     def login_user(self):
         # auth=request.authorisation
         data=request.get_json()
+        # keys=('user_name','user_password')
+        # if not set(keys).issubset(set(data)):
+        #     return jsonify({'message':'missing fields'}),400
+        # if 'user_name' or 'user_password' not in keys:
+        #     return jsonify({'message':'missing fields'}),400
 
         try:
             self.user_name =data.get('user_name').strip()
             self.user_password =data.get('user_password').strip()
-        except:
+        except AttributeError:
             None
 
-        current_user =User.fetch_all_users(self)
-        for user in current_user:
+        current_user =self.fetch_all_users()
+        for user in self.user_list:
             if user['user_name'] == self.user_name and user['user_password']==self.user_password:
-                return jsonify(user),200
+                return jsonify({'message':'you are successfully loged in', 'user':user}),200
             elif user['user_password'] != self.user_password :
                 return jsonify({"Message": "wrong password "}),400
             else:

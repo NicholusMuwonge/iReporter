@@ -47,6 +47,10 @@ class test_feature(unittest.TestCase):
         data_to_be_posted=self.client.post('/api/v1/records',data=json.dumps(self.sample_records), content_type=('application/json'))
         return data_to_be_posted
 
+    def test_home(self):
+        index=self.client.get('/',content_type='application/json')
+        return self.assertEqual(index.status_code,200)
+
 
     def test_post_record(self):
         i=self.client.post('/api/v1/records',data=json.dumps(self.sample_records), content_type=('application/json'))
@@ -175,6 +179,30 @@ class test_feature(unittest.TestCase):
         self.assertEqual(request_data.status_code,201)
         self.assertTrue(request_data.content_type, 'application/json')
         self.assertTrue(response_data['Message'],'New user registered successfully')
+
+    def test_login_user(self):
+        self.post_user('nicholas','nicksbro','nicks@gmail.com',1)
+        request_data=self.client.post('/api/v1/users/login',data=json.dumps(dict(email='nicks@gmail.com',user_password='nicksbro')),content_type=('application/json'))
+        response_data=json.loads(request_data.data.decode())
+        self.assertEqual(request_data.status_code,200)
+        self.assertTrue(request_data.content_type, 'application/json')
+        # self.assertTrue(response_data['message'],'you are successfully loged in')
+
+    # def test_missing_fields_login(self):
+    #     # self.post_user('nicholas','nicksbro','nicks@gmail.com',1)
+    #     request_data=self.client.post('/api/v1/users/login',data=json.dumps(dict(email='kkkkk',user_password='')),content_type=('application/json'))
+    #     response_data=json.loads(request_data.data.decode())
+    #     self.assertEqual(request_data.status_code,404)
+    #     self.assertTrue(request_data.content_type, 'application/json')
+
+    # def test_post_user_fields_missing(self):
+    #     request_data=self.post_user('','','hdhhd@gmail.com',2)
+    #     # request_data=self.client.post('/api/v1/users/signup',data=json.dumps(self.user),content_type=('application/json'))
+    #     # response_data=json.loads(request_data.data.decode())
+    #     self.assertEqual(request_data.status_code,400)
+    #     self.assertTrue(request_data.content_type, 'application/json')
+        # self.assertTrue(response_data['Message'],'New user registered successfully')
+
 
         
     

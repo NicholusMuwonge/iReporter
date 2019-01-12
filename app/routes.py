@@ -3,7 +3,6 @@ from .controller import Record
 from app import creat_app
 from flask import Flask,json,jsonify,request,make_response #MethodView,view_functions
 from .controller import User,User_class
-import uuid
 import jwt
 from werkzeug.security import check_password_hash
 import datetime
@@ -168,13 +167,13 @@ def create_user():
 def fetch_all_users():
     new_users_lists=user_object.fetch_all_users()
   
-    return jsonify({ 'users':new_users_lists}),200
+    return (new_users_lists)
 
 
 @app.route("/api/v1/users/login", methods=['POST'])
 def login():
     cheker=user_object.login_user()
-    return (cheker)
+    return jsonify(cheker)
 
 
 
