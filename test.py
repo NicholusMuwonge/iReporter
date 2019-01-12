@@ -169,7 +169,7 @@ class test_feature(unittest.TestCase):
 
 
 
-                """ users tests"""
+                # user_tests
     def post_user(self,user_name,user_password,email,user_id):
         data_to_be_posted=self.client.post('/api/v1/users',data=json.dumps(self.user), content_type=('application/json'))
         return data_to_be_posted
