@@ -5,4 +5,8 @@
 omit =
     
     */virtualenv/*
-    */app/*
+    */api/ routes.py
+    */api/operations_views.py
+    */api/controller
+    */api/model.py
+    */run/*
