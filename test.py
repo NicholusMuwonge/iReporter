@@ -2,7 +2,7 @@ from flask import Flask, json, jsonify
 import unittest
 from api.controller import Record, User
 from api.routes import mod, post_user, get_all_users
-from api.model import User_class
+from api.model import UserClass
 from run import app
 import re
 EXTRANEOUS_WHITESPACE_REGEX = re.compile(r'[[({] | []}),;:]')
@@ -20,7 +20,7 @@ class test_feature(unittest.TestCase):
         "email":'nichol@g.com'}
         self.faulty_user = {'user_name':'nichol','user_password':'',\
         "email":'nichol@g.com'}
-        self.object = User_class()
+        self.object = UserClass()
         self.controller = User()
         self.app = app
         self.client = self.app.test_client()

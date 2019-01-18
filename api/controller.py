@@ -1,58 +1,69 @@
 from flask import Flask, json, jsonify, make_response, request
-from flask import Flask, json, jsonify, make_response, request
-from .model import User_class
-from werkzeug.security import generate_password_hash, check_password_hash, safe_str_cmp
+from .model import UserClass
+from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
 
-i = User_class()
-class_object = User_class()
+user_data_operations = UserClass()
+
 
 class Record:
-     #initialize record lists
+
     def __init__(self):
         self.records = []
 
-    def   add_record(self,record):#record is the new redflag being created.
+    def add_record(self, record):  # record is the new redflag being created.
         """creating fields that will be returned automatically"""
-        record['record_no'] = int(len(self.records) + 1 )
+        record['record_no'] = int(len(self.records) + 1)
         record['record_type'] = 'Redflag_record'
         self.records.append(record)
-        return  record
+        return record
 
-    def    get_all_records(self):
+    def get_all_records(self):
         return self.records
 
-    def update_record(self,record_no,record_geolocation):
-        update_record=[record for record in self.records if record['record_no'] == record_no]
+    def update_record(self, record_no, record_geolocation):
+        update_record = [
+            record for record in self.records
+            if record['record_no'] == record_no
+            ]
         if update_record:
             update_record[0]['record_geolocation'] = record_geolocation
             return update_record
         else:
             return ('this record doesnt exist')
-            
-    def return_one(self,record_no):
-        if isinstance (record_no,int):
+
+    def return_one(self, record_no):
+        if isinstance(record_no, int):
             for record in self.records:
                 if record["record_no"] == record_no: 
                     return record
         else:
-            return('Input proper record_no'),204
+            return('Input proper record_no'), 204
 
-    def delete_record(self,record_no):
-        record_deleted = [record for record in self.records if record['record_no'] == record_no]
+    def delete_record(self, record_no):
+        record_deleted = [
+            record for record in self.records
+            if record['record_no'] == record_no
+            ]
         if record_deleted:
             deleted_records = self.records.remove(record_deleted[0])
-            return (jsonify({'records':deleted_records}))
+            return (jsonify({'records': deleted_records}))
 
 
 class User:
     def __init__(self):
         self.user_list = []
 
-    def register_user(self,user_name,user_password,email,user_type,registered_date,user_id):
-        new_user = [class_object.user_name,class_object.user_password,\
-        class_object.email,class_object.user_id,class_object.user_type]
-# (generate_password_hash(class_object.user_password,method='sha256') )
+    def register_user(
+        self, user_name,user_password,
+        email, user_type, registered_date, 
+        user_id):
+
+        new_user = [
+            user_data_operations.user_name,user_data_operations.user_password,
+            user_data_operations.email,user_data_operations.user_id,
+            user_data_operations.user_type
+            ]
         for user in new_user:
             user = {}
             user['user_name'] = user_name
@@ -77,10 +88,18 @@ class User:
             None
         list = User.fetch_all_users(self)
         for use in list:
-            if use['user_name'] == self.user_name and use['user_password'] == self.user_password:
-                return jsonify({'message':'you are successfully loged in','user':use}),200
-            elif use['user_password'] != self.user_password :
-                return jsonify({"Message":"wrong password "}),400
+            if (
+                use['user_name'] == self.user_name and 
+                use['user_password']) == self.user_password:
+                return jsonify({
+                    'message':'you are successfully loged in',
+                    'user':use
+                    }),200
+            elif use['user_password'] != self.user_password:
+                return jsonify({
+                    "Message":"wrong password "
+                    }),400
             else:
-                return jsonify({"Message":"No username  Found"}),404
-                # i.verify_password(self.user_password,user['user_password'])
+                return jsonify({
+                    "Message":"No username  Found"
+                    }),404  
