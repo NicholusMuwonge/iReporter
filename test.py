@@ -29,7 +29,10 @@ class test_feature(unittest.TestCase):
     def tearDown(self):
         print('Teardown')
 
-    def post_record(self,record_no,record_title,record_geolocation,record_type):
+    def post_record(
+        self, record_no, record_title, 
+        record_geolocation, record_type
+        ):
         data_to_be_posted = self.client.post('/api/v1/records/',\
         data = json.dumps(dict(record_title = 'corruption',record_geolocation = '09494N 859494M')),\
         content_type = ('application/json'))
@@ -43,7 +46,11 @@ class test_feature(unittest.TestCase):
         return self.assertEqual(index.status_code,200)
 
     def test_post_record(self):
-        i = self.client.post('/api/v1/records/',data = json.dumps(dict(record_title = 'corruption',record_geolocation = '09494N 859494M')), content_type = ('application/json'))
+        i = self.client.post(
+            '/api/v1/records/',
+            data = json.dumps(dict(
+                record_title = 'corruption',record_geolocation = '09494N 859494M'
+                )), content_type = ('application/json'))
         post_response = json.loads(i.data.decode())
         self.assertEqual(i.status_code,201)
         self.assertTrue(i.content_type, 'application/json')
@@ -67,7 +74,6 @@ class test_feature(unittest.TestCase):
                 self.assertTrue(item.content_type, 'application/json')
         else:
             item = self.client.get('/api/v1/records')
-            response_data = json.loads(item.data.decode())
             self.assertTrue(item.content_type, 'application/json')
             self.assertEqual(item.status_code,200)
 
@@ -95,13 +101,19 @@ class test_feature(unittest.TestCase):
 
     def test_update_record(self):
         self.client.post('/api/v1/records/',
-        data = json.dumps(dict(record_title = 'corruption',record_geolocation = '09494N 859494M')),\
+        data = json.dumps(dict(
+            record_title = 'corruption',
+            record_geolocation = '09494N 859494M'
+            )),\
         content_type = ('application/json'))
         self.client.post('/api/v1/records/',
-        data = json.dumps(dict(record_title = 'theft',record_geolocation = '09494N 859494M')),\
+        data = json.dumps(dict(
+            record_title = 'theft', 
+            record_geolocation = '09494N 859494M')),\
         content_type = ('application/json'))
         self.client.post('/api/v1/records/',
-        data = json.dumps(dict(record_title = 'burglary',record_geolocation = '09494N 859494M')),\
+        data = json.dumps(dict(record_title = 'burglary', 
+        record_geolocation = '09494N 859494M')),\
         content_type = ('application/json'))
         request_data =  self.client.put('/api/v1/records/3/',
             data = json.dumps(dict(record_geolocation = "0000000N 777777S")),\
@@ -155,7 +167,10 @@ class test_feature(unittest.TestCase):
         self.assertTrue(response_data['message'],'password is required')
 
     def test_login_user(self):
-        self.client.post('/api/v1/users/signup/',data = json.dumps(self.other_user),content_type = ('application/json'))
+        self.client.post(
+            '/api/v1/users/signup/', 
+            data = json.dumps(self.other_user), 
+            content_type = ('application/json'))
         request_data = self.client.post('/api/v1/users/login/',\
         data = json.dumps({"user_name":"nichol","user_password":'great'}),\
         content_type = ('application/json'))
@@ -165,7 +180,9 @@ class test_feature(unittest.TestCase):
         self.assertTrue(response_data['message'],'you are successfully loged in')
 
     def test_login_user_empty_fields(self):
-        self.client.post('/api/v1/users/signup/',data = json.dumps(self.other_user),content_type = ('application/json'))
+        self.client.post('/api/v1/users/signup/', 
+        data = json.dumps(self.other_user), 
+        content_type = ('application/json'))
         request_data = self.client.post('/api/v1/users/login/',\
         data = json.dumps({"user_name":"nichol","user_password":''}),\
         content_type = ('application/json'))
@@ -184,7 +201,10 @@ class test_feature(unittest.TestCase):
         self.list = self.controller.fetch_all_users()
         if self.list:
             self.client.post('/api/v1/users/signup/',\
-            data = json.dumps(dict(user_name = 'nicholus',user_password = 'straightup',email = 'nicholus@gmail.com')),\
+            data = json.dumps(dict(
+                user_name = 'nicholus', 
+                user_password = 'straightup', 
+                email = 'nicholus@gmail.com')),\
             content_type = ('application/json'))
             request_data = self.client.get('/api/v1/users/',content_type = 'application/json')
             self.assertEqual(request_data.status_code,200)
