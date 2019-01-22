@@ -102,6 +102,16 @@ class Error_message:
         return jsonify(response_object), 403
 
     @staticmethod
+    def invalid_input():
+        return jsonify({
+            "status": "fail",
+            "error_message": "The input here should \
+            be a string of characters",
+            "data": request.get_json()
+                   }), 400
+
+
+    @staticmethod
     def no_items(item):
         response_object = {
             'status': 'fail',
@@ -116,3 +126,20 @@ class Error_message:
             'message': 'Permission denied, Please Login as Admin'
         }
         return jsonify(response_object), 403
+
+    @staticmethod
+    def status_already_updated(status):
+        response_object = {
+            'status': 'fail',
+            'error_message': 'You can not update record',
+            'data': False
+        }
+        return jsonify(response_object), 406
+
+    @staticmethod
+    def record_status_not_found(status):
+        return jsonify({
+            "status": "fail",
+            "error_message": "Record status {} not found, \
+            only use cancelled as the value".format(status),
+        }), 404
