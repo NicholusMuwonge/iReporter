@@ -79,7 +79,16 @@ class DatabaseConnection:
                         'status':'success'}
         return response_object
 
-    
+    def find_user_by_id(self, user_id):
+        """
+        adminstrator can request for details about a particular user
+        """
+
+        user = "SELECT * FROM user_list WHERE user_id ='{}'".format(user_id)
+        self.cursor.execute(user)
+        user_returned = self.cursor.fetchone()
+        return user_returned
+
     
 
     
