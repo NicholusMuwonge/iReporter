@@ -18,3 +18,6 @@ class Routes:
                          methods=['POST'], strict_slashes=False)
         app.add_url_rule('/api/v2/auth/login/', view_func=Login.as_view('login_user'),
                          methods=['POST'], strict_slashes=False)
+        app.add_url_rule('/api/v2/record/<int:record_no>/status/',
+                         view_func=Login.as_view('update_record_status'),
+                         methods=['PUT'], strict_slashes=False)
