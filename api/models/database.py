@@ -100,6 +100,27 @@ class DatabaseConnection:
         users_list=self.cursor.fetchall()
         return users_list
 
+    def find_user_by_username(self, user_name):
+        """
+        find a specific user given their user name
+        """
+
+        name = "SELECT * FROM user_list WHERE user_name ='{}'".format(
+            user_name
+            )
+        self.cursor.execute(name)
+        username_returned = self.cursor.fetchone()
+        return username_returned
+
+    def find_user_by_email(self, email):
+        """
+        find a specific user using their email
+        """
+        user_returned = "SELECT * FROM user_list WHERE email = '{}'".format(email)
+        self.cursor.execute(user_returned)
+        check_email = self.cursor.fetchone()
+        return check_email
+
     def check_admin(self):
         """
         method to set admin to true which gives a user admin privileges.
@@ -154,3 +175,5 @@ class DatabaseConnection:
         self.dict_cursor.execute(user_records)
         get_records = self.dict_cursor.fetchall()
         return jsonify(get_records)
+        
+DatabaseConnection().create_tables()

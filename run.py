@@ -1,8 +1,24 @@
-from api import mod
-from api import creat_app
 
-app = creat_app()
-app.register_blueprint(mod)
+from flask import Flask,json,jsonify
+from api.routes.operations_views import Routes
+from api.models.database import DatabaseConnection
 
-if __name__ == "__main__":
+app = Flask(__name__)
+app.env = 'development'
+Routes.generate(app)
+
+
+
+@app.before_first_request
+def admin():
+    data = DatabaseConnection()
+    data.check_admin()
+
+
+@app.route('/')
+def index():
+    return jsonify({'message': 'Welcome dear concerned citizen'}),200
+
+
+if __name__ == '__main__':
     app.run(debug=True)
