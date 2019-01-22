@@ -52,3 +52,20 @@ class Login(MethodView):
                 'message': 'User does not exist.'
             }
             return jsonify(response_object), 404
+
+    def get(self, user_id):
+        """
+        Method to return a single users record records
+        """
+        user = get_jwt_identity()
+        admin = user[3]
+        user_id = user[0]
+
+        if user_id and admin == "FALSE" :
+            my_records = self.data.get_records_for_specific_users(user_id)
+            if isinstance(my_records, object):
+                user=self.data.find_user_by_id(user_id)
+                return (my_records), 200
+            else:
+                return Error_message.no_items('record')
+        return Error_message.permission_denied()
