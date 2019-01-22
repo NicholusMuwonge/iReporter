@@ -20,9 +20,6 @@ class Record:
         self.record_geolocation = record_geolocation
         self.record_type = record_type
         self.status = 'Under Investigation'
-        self.record_placement_date = datetime.datetime.now().strftime\
-        ("%Y-%m-%d %H:%M:%S")
-
 
     def post_record(
         self,record_type=None, record_title=None, 
