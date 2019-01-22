@@ -79,6 +79,7 @@ class DatabaseConnection:
                         'status':'success'}
         return response_object
 
+
     def find_user_by_id(self, user_id):
         """
         adminstrator can request for details about a particular user
@@ -153,5 +154,3 @@ class DatabaseConnection:
         self.dict_cursor.execute(user_records)
         get_records = self.dict_cursor.fetchall()
         return jsonify(get_records)
-    
-
