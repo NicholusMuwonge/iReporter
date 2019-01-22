@@ -1,23 +1,37 @@
-import re
-from werkzeug.security import generate_password_hash, check_password_hash
-
-# """ creating users """
+import datetime
+from api.models.database import DatabaseConnection
 
 
-class UserClass:
+class Record:
 
-    def __init__(self):
-        self.user_name = None
-        self.user_password = None
-        self.email = None
-        self.user_id = 0
-        self.registered_date = None
-        self.user_type = None
+    """
+    This class uses the database to store data persistently
+    """
+    db = DatabaseConnection()
 
-    def user_mail_setting(self, email):
-      email_pattern = re.compile(
-            r"^[A-Za-z0-9.+_-]+@[A-Za-z0-9._-]+\.[a-zA-Z]*$"
-          )
-      if email_pattern:
-          return True
-      return False
+    def __init__(
+        self, record_type=None, record_title=None, 
+        record_geolocation=None, status=None, 
+        user_id=None,record_no=None
+        ):
+        self.record_no = None
+        self.user_id = user_id
+        self.record_title = record_title
+        self.record_geolocation = record_geolocation
+        self.record_type = record_type
+        self.status = 'Pending'
+        self.record_placement_date = datetime.datetime.now().strftime\
+        ("%Y-%m-%d %H:%M:%S")
+
+
+    def post_record(
+        self,record_type=None, record_title=None, 
+        record_geolocation=None, user_id=None
+        ):
+        """
+        Make new parcel delivery order
+        """
+        record_placed = self.db.post_record(
+            record_type, record_title, record_geolocation, user_id
+            )
+        return record_placed
