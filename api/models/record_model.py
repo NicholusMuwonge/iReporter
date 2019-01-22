@@ -5,7 +5,7 @@ from api.models.database import DatabaseConnection
 class Record:
 
     """
-    This class uses the database to store data persistently
+    Class to handle records creation
     """
     db = DatabaseConnection()
 
@@ -19,7 +19,7 @@ class Record:
         self.record_title = record_title
         self.record_geolocation = record_geolocation
         self.record_type = record_type
-        self.status = 'Pending'
+        self.status = 'Under Investigation'
         self.record_placement_date = datetime.datetime.now().strftime\
         ("%Y-%m-%d %H:%M:%S")
 
@@ -29,7 +29,7 @@ class Record:
         record_geolocation=None, user_id=None
         ):
         """
-        Make new parcel delivery order
+        User can be able to post a new record
         """
         record_placed = self.db.post_record(
             record_type, record_title, record_geolocation, user_id
