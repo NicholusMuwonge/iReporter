@@ -13,13 +13,21 @@ from flask import Flask, json, jsonify
 class DatabaseConnection:
     
     def __init__(self):
-        if os.getenv('Heroku_environment') == 'heroku_database':  # set cloud database environment
+        if os.getenv("APP_CONFIG") == 'development':  # set cloud database environment
                 self.connection = psycopg2.connect(
                 host="", 
                 database="", user="",
                 port="5432", 
                 password=""
                 )
+        elif os.getenv('ENV') == 'development':
+            self.connection = psycopg2.connect(
+            host="localhost", 
+            database="table_test_db", user="postgres",
+            port="5432", 
+            password=""
+            )
+
         else:
             self.connection = psycopg2.connect(
             host="localhost", 
@@ -175,6 +183,46 @@ class DatabaseConnection:
             )
         self.dict_cursor.execute(user_records)
         get_records = self.dict_cursor.fetchall()
-        return jsonify(get_records)
+        return get_records
+
+    def update_record_geolocation(self,
+        record_geolocation, record_no):
+        """
+        user updates a specific record by adjusting the geolocation figures
+        :param record_geolocation:
+        :param record_no:
+        :return:
+        """
+        record_update = "UPDATE records SET record_geolocation = '{}' \
+        WHERE record_no = '{}'".format(
+            record_geolocation, record_no
+            )
+        self.cursor.execute(record_update)
+        return True
+
+    def change_status(self, status, record_no):
+        """
+        change the state of the posted record by adminstrator
+        """
+        update = """UPDATE records SET status = '{}' \
+        WHERE record_no = '{}';""".format(status, record_no)
+        self.cursor.execute(update)
+        return True
         
+    def delete_record(self, record_no):
+        """
+        Delete a record
+        """
+        records="DELETE FROM records \
+        WHERE record_no = '{}'".format(record_no)
+        delete=self.cursor.execute(records)
+        if delete:
+            return ({
+                "message":"item successfully deleted"
+                })
+        else:
+            return ({
+                'message':'please try again or item not found'
+                })
+
 DatabaseConnection().create_tables()

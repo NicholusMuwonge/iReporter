@@ -18,6 +18,7 @@ class Login(MethodView):
     auth = AuthenticatePassword()
     val = Verification()
 
+    
     def post(self):
         post_data = request.get_json()
         keys = ('user_name', 'user_password')
@@ -52,3 +53,54 @@ class Login(MethodView):
                 'message': 'User does not exist.'
             }
             return jsonify(response_object), 404
+
+
+    @jwt_required
+    def get(self, user_id):
+        """
+        Method to return a single users records
+        """
+        user = get_jwt_identity()
+        admin = user[3]
+        user_id = user[0]
+
+        if user_id and admin == "FALSE" :
+            my_records = self.data.get_records_for_specific_users(user_id)
+            if isinstance(my_records, object):
+                user=self.data.find_user_by_id(user_id)
+                return jsonify(my_records), 200
+            else:
+                return Error_message.no_items('record')
+        return Error_message.permission_denied()
+
+
+   
+
+    @jwt_required
+    def put(self, record_geolocation=None, record_no=None):
+        """
+        update record geolocation by user
+        """
+        user = get_jwt_identity()
+        admin = user[3]
+        user_id = user[0]
+
+        if admin == "FALSE" and user_id:
+            post_data=request.get_json()
+            keys=('record_geolocation')
+            
+            if not keys:
+                return Error_message.missing_fields(record_geolocation)
+            try:
+                record_geolocation=post_data['record_geolocation'].strip()
+            except AttributeError:
+                    return Error_message.invalid_data_format()
+            if self.data.update_record_geolocation(record_geolocation,record_no):
+                response_object = {
+                    'message': 'Present location has\
+                    been updated successfully'
+                    }
+                return jsonify(response_object), 202
+
+            return Error_message.no_items('record')
+        return Error_message.permission_denied()
