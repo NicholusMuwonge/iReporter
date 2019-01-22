@@ -133,17 +133,17 @@ class test_feature(unittest.TestCase):
     #     content_type = ('application/json'))
     #     return data_to_be_posted
 
-    def test_post_user(self):
-        request_data = self.client.post('/api/v2/auth/signup/',data = json.dumps(
-            dict(user_name='muwongenicholus',
-                user_password='straightup',
-                email='nicholus@gmail.com')
-        ),\
-        content_type = ('application/json'))
-        response_data = json.loads(request_data.data.decode())
-        self.assertEqual(request_data.status_code,201)
-        self.assertTrue(request_data.content_type,'application/json')
-        self.assertTrue(response_data['Message'],'New user registered successfully')
+    # def test_post_user(self):
+    #     request_data = self.client.post('/api/v2/auth/signup/',data = json.dumps(
+    #         dict(user_name='muwongenicholus',
+    #             user_password='straightup',
+    #             email='nicholus@gmail.com')
+    #     ),\
+    #     content_type = ('application/json'))
+    #     response_data = json.loads(request_data.data.decode())
+    #     self.assertEqual(request_data.status_code,201)
+    #     self.assertTrue(request_data.content_type,'application/json')
+    #     self.assertTrue(response_data['Message'],'New user registered successfully')
 
     def test_post_user_empty_fields(self):
 
@@ -155,7 +155,10 @@ class test_feature(unittest.TestCase):
         # self.assertTrue(response_data['message'],'password is required')
 
     # def test_login_user(self):
-    #     self.client.post('/api/v1/users/signup/',data = json.dumps(self.other_user),content_type = ('application/json'))
+    #     self.client.post(
+    #         '/api/v1/users/signup/',
+    #         data = json.dumps(self.other_user),
+    #         content_type = ('application/json'))
     #     request_data = self.client.post('/api/v1/users/login/',\
     #     data = json.dumps({"user_name":"nichol","user_password":'great'}),\
     #     content_type = ('application/json'))

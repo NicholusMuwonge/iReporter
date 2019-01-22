@@ -11,6 +11,7 @@ from flask import Flask, json, jsonify
 
 
 class DatabaseConnection:
+    
     def __init__(self):
         if os.getenv('Heroku_environment') == 'heroku_database':  # set cloud database environment
                 self.connection = psycopg2.connect(

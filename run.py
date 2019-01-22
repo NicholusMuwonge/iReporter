@@ -2,11 +2,13 @@
 from flask import Flask,json,jsonify
 from api.routes.operations_views import Routes
 from api.models.database import DatabaseConnection
+from flask_jwt_extended import JWTManager
 
 app = Flask(__name__)
 app.env = 'development'
 Routes.generate(app)
-
+app.config['JWT_SECRET_KEY'] = 'nicks'
+jwt = JWTManager(app)
 
 
 @app.before_first_request
