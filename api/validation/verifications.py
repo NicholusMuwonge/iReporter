@@ -42,7 +42,7 @@ class Verification:
         """
         password strength validator
         """
-        if length > len(password) > length1:
+        if length > len(password)  or  length1 < len(password):
             return False
         return password.isalnum()  # to return password with both alphabetic,numerical characters,and some special characters. 
 

@@ -4,6 +4,8 @@ Module to handle url requests
 from api.controllers.sign_up_controller import Signup
 from api.controllers.login_controller import Login
 from api.controllers.intervention_record import RecordLogic
+from api.controllers.red_flag import Redflags
+from api.controllers.redflag_extension import Redflag
 
 class Routes:
     """
@@ -38,3 +40,12 @@ class Routes:
         app.add_url_rule('/api/v2/record/<int:record_no>/status/',
                          view_func=RecordLogic.as_view('update_record_status'),
                          methods=['PUT'], strict_slashes=False)
+        app.add_url_rule('/api/v2/redflag/<int:record_no>/',
+                         view_func=Redflags.as_view('get one red flag'),
+                         methods=['GET'], strict_slashes=False)
+        app.add_url_rule('/api/v2/redflags/',
+                         view_func=Redflag.as_view('get all red flag'),
+                         methods=['GET'], strict_slashes=False)
+        app.add_url_rule('/api/v2/redflag/<int:record_no>/',
+                         view_func=Redflags.as_view('delete red flag'),
+                         methods=['DELETE'], strict_slashes=False)
