@@ -29,6 +29,6 @@ class Record:
         User can be able to post a new record
         """
         record_placed = self.db.post_record(
-            record_type, record_title, record_geolocation, user_id
+            record_title, record_geolocation,record_type, user_id
             )
         return record_placed

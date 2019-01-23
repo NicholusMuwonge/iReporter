@@ -7,6 +7,10 @@ from api.flags.error_responses import Error_message
 from api.models.sign_up_model import User
 from api.validation.verifications import Verification
 from api.authentication.password_check import AuthenticatePassword
+from flask_jwt_extended import jwt_required , jwt_manager
+from api.models.database import DatabaseConnection
+
+db=DatabaseConnection()
 
 
 
@@ -51,3 +55,17 @@ class Signup(MethodView):
             'message': 'Your account has been created successfully'
             }
         return jsonify(response_object), 201
+
+    @jwt_required
+    def get(self):
+        all_red_flags= db.get_all_redflags()
+        if all_red_flags:
+            return jsonify({'message':"successfully retrieved all redflags" ,
+            "data" : all_red_flags,
+            "status" : "success" }),200
+        else:
+            return jsonify({
+                "message":"users not found",
+                "data" : False,
+                "status" : "Fail"
+            }),404
