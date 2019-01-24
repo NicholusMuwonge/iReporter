@@ -1,95 +1,104 @@
-"""
 
-where my sql syntax for persisting data in the database will be contained
-
-"""
-import psycopg2 
-from psycopg2.extras import RealDictCursor
 import os
-from dotenv import load_dotenv  # loadenv is used to set up an environment
-from flask import Flask, json, jsonify
+import psycopg2
+from psycopg2.extras import RealDictCursor
+from flask import Flask, json, jsonify # test db db for travis , discover flask configurations
+from dotenv import load_dotenv
 
 
 class DatabaseConnection:
-    
-    def __init__(self):
-        if os.getenv("APP_CONFIG") == 'development':  # set cloud database environment
-                self.connection = psycopg2.connect(
-                host="", 
-                database="", user="",
-                port="5432", 
-                password=""
-                )
-        elif os.getenv('ENV') == 'development':
-            self.connection = psycopg2.connect(
-            host="localhost", 
-            database="table_test_db", user="postgres",
-            port="5432", 
-            password=""
-            )
 
-        else:
+    def __init__(self):
+
+        if os.getenv("APP_CONFIG") == 'development':
             self.connection = psycopg2.connect(
-            host="localhost", 
-            database="trying", user="postgres",
-            port="5432", 
-            password=""
-            )
-        self.connection.autocommit = True  # make research of use
-        self.cursor = self.connection.cursor()  # a cursor object is created used to connect and communicate with database
+                host="ec2-54-225-227-125.compute-1.amazonaws.com", 
+                database="d95nn0mi29nlqj", user="mretfseraxhfos",
+                port="5432", 
+                password="50f7e8f2d88a9fd05fe86691b7ae23d2529577ed0bb1a10ab6a6154581f404a3"
+                )
+        else:
+            
+            self.connection = psycopg2.connect(
+                host="localhost", database="trying", 
+                user="postgres",
+                port="5432", password=""
+                )
+        self.connection.autocommit = True
+        self.cursor = self.connection.cursor()
         self.dict_cursor = self.connection.cursor(
             cursor_factory=RealDictCursor
-            )  # make more research on the realdict cusor
+            )
 
     def create_tables(self):
         """
-        This is the function that creates the tables in the database where data will be persisted
-        """
-        table_creation_commands= ("""CREATE TABLE IF NOT EXISTS "user_list"(
-                    user_id SERIAL NOT NULL PRIMARY KEY,
-                    user_name VARCHAR (255) NOT NULL,
-                    email VARCHAR (255) UNIQUE NOT NULL,
-                    Admin VARCHAR (100) DEFAULT 'FALSE',
-                    user_password VARCHAR (255) NOT NULL  
-        )""",
-        """ CREATE TABLE IF NOT EXISTS "records"(
-                    record_no SERIAL (255) NOT NULL PRIMARY KEY,
-                    user_id INTEGER NOT NULL,
-                    FOREIGN KEY (user_id) REFERENCES "user_list" (user_id),
-                    ON UPDATE CASCADE ON DELETE CASCADE ,
-                    record_title VARCHAR(255) NOT NULL,
-                    record_geolocation FLOAT NOT NULL,
-                    record_type VARCHAR(255) NOT NULL,
-                    status VARCHAR(255) NOT NULL DEFAULT 'Under Investigation',
-                    record_placement_date TIMESTAMP DEFAULT NOW() NOT NULL
-            
+        This method creates tables one after the other in the database after the connection has been established.
 
-        )"""
+        """
+
+        commands = (
+            """
+            CREATE TABLE IF NOT EXISTS "user_list" (
+                    user_id SERIAL NOT NULL PRIMARY KEY,
+                    user_name VARCHAR(255) NOT NULL,
+                    email VARCHAR(255) UNIQUE NOT NULL,
+                    admin VARCHAR(100) DEFAULT 'FALSE',
+                    user_password VARCHAR(255) NOT NULL
+
+                )
+            """,
+            """
+            CREATE TABLE IF NOT EXISTS "records" (
+                    record_no SERIAL NOT NULL PRIMARY KEY,
+                    user_id INTEGER NOT NULL,
+                    FOREIGN KEY (user_id) REFERENCES "user_list" (user_id)
+                    ON UPDATE CASCADE ON DELETE CASCADE,
+                    record_title VARCHAR(255) NOT NULL,
+                    record_geolocation VARCHAR(255) NOT NULL,
+                    record_type VARCHAR(255) NOT NULL,
+                    status VARCHAR(255) NOT NULL DEFAULT 'Pending',
+                    record_placement_date TIMESTAMP DEFAULT NOW() NOT NULL
+                    )
+            """
         )
 
         try:
-            for table in table_creation_commands:
-                self.cursor.connection(table)
-            self.connection.commit()  # make research
-            self.cursor.close()  # closes the connection afeter tables function runs.
-        except (Exception, psycopg2.DatabaseError) as error:  #make more research about this
+            for command in commands:
+                self.cursor.execute(command)
+            self.connection.commit()
+            self.cursor.close()
+
+        except (Exception, psycopg2.DatabaseError) as error:
             print(error)
         finally:
-            if self.connection is not None:  # eplain some more
-                self.connection.close()  # the connection is then closed off after all those commands have been executed
+            if self.connection is not None:
+                self.connection.close()
 
-    def create_user(self,user_name,user_password,email):
-        new_user="""INSERT INTO user_list(
-            user_name, email, user_password
-            ) 
-            VALUES(
-            '{0}','{1}','{2}'
-        );""".format(user_name,user_password,email)
-        self.cursor.execute(new_user)
-        response_object={'message':'successfully signed up',
-                        'status':'success'}
-        return response_object
+    def insert_user(self, user_name, email, user_password):
+        """
+        add new user to database
+        """
+        add_user = """INSERT INTO user_list(user_name, email, user_password)
+                   VALUES ('{0}', '{1}', '{2}');""".format(
+                       user_name, email, 
+                       user_password
+                       )
+        self.cursor.execute(add_user)
+        return jsonify({
+            'message':'user_created successfuly'
+            })
 
+    def find_user_by_username(self, user_name):
+        """
+        find a specific user given a user name
+        """
+
+        name = "SELECT * FROM user_list WHERE user_name ='{}'".format(
+            user_name
+            )
+        self.cursor.execute(name)
+        username_returned = self.cursor.fetchone()
+        return username_returned
 
     def find_user_by_id(self, user_id):
         """
@@ -101,28 +110,6 @@ class DatabaseConnection:
         user_returned = self.cursor.fetchone()
         return user_returned
 
-    def get_all_users(self):
-        """
-        adminstrator can get a list of existing users
-        """
-
-        user_returned="""SELECT * FROM user_list"""
-        self.dict_cursor.execute(user_returned)
-        users_list=self.cursor.fetchall()
-        return users_list
-
-    def find_user_by_username(self, user_name):
-        """
-        find a specific user given their user name
-        """
-
-        name = "SELECT * FROM user_list WHERE user_name ='{}'".format(
-            user_name
-            )
-        self.cursor.execute(name)
-        username_returned = self.cursor.fetchone()
-        return username_returned
-
     def find_user_by_email(self, email):
         """
         find a specific user using an email
@@ -131,16 +118,6 @@ class DatabaseConnection:
         self.cursor.execute(user_returned)
         check_email = self.cursor.fetchone()
         return check_email
-
-
-    def check_admin(self):
-        """
-        method to set admin to true which gives a user admin privileges.
-        """
-        self.cursor.execute("UPDATE user_list\
-        SET admin = 'TRUE' WHERE user_id = 1")
-
-    
 
     def post_record(self, 
         record_title, record_geolocation, 
@@ -151,14 +128,12 @@ class DatabaseConnection:
         record_posted = """INSERT INTO records (
             record_title, record_geolocation, record_type, user_id
             )
-                    VALUES ('{0}', '{1}', '{2}', '{3}') ;""".format(
+                    VALUES ('{0}', '{1}', '{2}', '{3}');""".format(
                         record_title, record_geolocation, 
                         record_type, user_id
                         )
         self.cursor.execute(record_posted)
-        self.dict_cursor.fetchone()
-        return ({'message':'created successfully ',
-                'status' : 'success'})
+        return ('created')
 
     def get_all_records(self):
         """
@@ -178,25 +153,21 @@ class DatabaseConnection:
         record = self.dict_cursor.fetchone()
         return jsonify(record)
 
-    
     def get_records_for_specific_users(self, user_id):
         """
-        return all records created by a particular user.
+        return all records created by a particular user
         """
         user_records = "SELECT * FROM records WHERE user_id ='{}'".format(
             user_id
             )
         self.dict_cursor.execute(user_records)
         get_records = self.dict_cursor.fetchall()
-        return get_records
+        return jsonify(get_records)
 
     def update_record_geolocation(self,
         record_geolocation, record_no):
         """
         user updates a specific record by adjusting the geolocation figures
-        :param record_geolocation:
-        :param record_no:
-        :return:
         """
         record_update = "UPDATE records SET record_geolocation = '{}' \
         WHERE record_no = '{}'".format(
@@ -204,6 +175,15 @@ class DatabaseConnection:
             )
         self.cursor.execute(record_update)
         return True
+
+    def record_status(self, status, record_no):
+        """
+        update the  status of a given record 
+        """
+        update = "UPDATE records SET status = '{}' \
+        WHERE record_no = '{}'".format(
+            status, record_no)
+        self.cursor.execute(update)
 
     def change_status(self, status, record_no):
         """
@@ -213,10 +193,29 @@ class DatabaseConnection:
         WHERE record_no = '{}';""".format(status, record_no)
         self.cursor.execute(update)
         return True
-        
+
+    def check_records_approved(self, status):
+        """
+        get all records that have been approved by the adminstrator
+        """
+        records="""(SELECT * FROM records WHERE status = 'Approved')"""
+        self.cursor.execute(records)
+        returned_records=self.cursor.fetchall()
+        return returned_records
+
+    def check_for_cancelled_records(self, record_no):
+        """
+        get all records that have been denied by the adminstrator
+        """
+        records = """(SELECT * FROM records \
+        WHERE status='Cancelled')"""
+        self.cursor.execute(records)
+        returned_records = self.cursor.fetchall()
+        return returned_records
+
     def delete_record(self, record_no):
         """
-        Delete a record
+        Get a specific record to check whether  status has been reesolved or rejected
         """
         records="DELETE FROM records \
         WHERE record_no = '{}'".format(record_no)
@@ -230,13 +229,7 @@ class DatabaseConnection:
                 'message':'please try again or item not found'
                 })
 
-    
 
-
-
-# """
-# redflags
-# """
 
     def get_one_redflags(self,record_no):
         redflags=  "SELECT * FROM records WHERE record_type ='redflags' and record_no ='{}' ".format(
@@ -286,9 +279,14 @@ class DatabaseConnection:
                 'message':'please try again or item not found'
                 })
 
-    # def drop_tables(self,table_name):
-    #     delete_tables= "DROP TABLE IF EXISTS {} CASCADE;".format(table_name)
-    #     dropped=self.cursor.execute(delete_tables)
-    #     return dropped
+
+    def check_admin(self):
+        """
+        method to set admin to true which gives a user admin privileges.
+        """
+        self.cursor.execute("UPDATE user_list\
+        SET admin = 'TRUE' WHERE user_id = 1")
+
+
 
 DatabaseConnection().create_tables()

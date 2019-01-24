@@ -5,7 +5,7 @@ from api.models.database import DatabaseConnection
 class Record:
 
     """
-    Class to handle records creation
+    This class uses the database to store data persistently
     """
     db = DatabaseConnection()
 
@@ -19,16 +19,19 @@ class Record:
         self.record_title = record_title
         self.record_geolocation = record_geolocation
         self.record_type = record_type
-        self.status = 'Under Investigation'
+        self.status = 'Pending'
+        
+        
 
     def post_record(
         self,record_type=None, record_title=None, 
         record_geolocation=None, user_id=None
         ):
         """
-        User can be able to post a new record
+        post new intervention record
         """
         record_placed = self.db.post_record(
-            record_title, record_geolocation,record_type, user_id
+            record_type, record_title, record_geolocation, user_id
             )
+
         return record_placed

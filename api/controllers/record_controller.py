@@ -1,22 +1,24 @@
+"""
+Directors on what to do with data from the models
+"""
 from flask import request, jsonify
 from flask.views import MethodView
 from api.models.record_model import Record
-from api.flags.error_responses import Error_message
+from api.Error.responses import Error_message
 from api.validation.verifications import Verification
 from api.models.database import DatabaseConnection
 from flask_jwt_extended import (
     jwt_required, get_jwt_identity
     )
 
-
-class RecordLogic(MethodView):
+class Record_logic(MethodView):
     """
     Class with  methods to handle get, post and put methods
     """
     record_title = None
     record_geolocation = None
     record_type = None
-    status='Under Investigation'
+    status='Pending'
     val = Verification()
     record_data = Error_message()
     data = DatabaseConnection()
@@ -40,17 +42,20 @@ class RecordLogic(MethodView):
 
             if not set(keys).issubset(set(post_data)):
                 return Error_message.missing_fields(keys)
+
             try:
                 self.record_title = post_data['record_title'].strip()
                 self.record_geolocation = post_data['record_geolocation'].strip()
                 self.record_type = post_data['record_type'].strip()
+
             except AttributeError:
                 return Error_message.invalid_data_format()
+
             if not self.record_title or not self.record_geolocation or not self.record_type:
                 return Error_message.empty_data_fields()
-            new_record = self.record.post_record(
-                self.record_type, self.record_geolocation,
-                self.record_title,str(user_id))
+            elif not isinstance(self.record_geolocation,float):
+                return Error_message.invalid_input()
+            new_record = self.record.post_record(self.record_type,self.record_geolocation,self.record_title,str(user_id))
             response_object = {
                 'message': 'Successfully posted a new record',
                 'data': new_record
@@ -116,7 +121,7 @@ class RecordLogic(MethodView):
             post_data = request.get_json()
 
             key = "status"
-            status_key= ['Resolved','Rejected']
+            status = ['Approved','Denied']
 
             if key in post_data:
                 try:
@@ -127,7 +132,7 @@ class RecordLogic(MethodView):
                     return Error_message.invalid_input()
                 if not status:
                     return Error_message.empty_data_fields()
-                if not status in status_key:
+                if status not in status:
                     return Error_message.record_status_not_found(status)
                 updated_status = self.data.change_status(status, record_no)
                 if isinstance(updated_status, object):
@@ -139,20 +144,38 @@ class RecordLogic(MethodView):
 
 
     @jwt_required
+    def update_geolocation(self, record_geolocation, record_no):
+        """
+        Method to update the destination of a record  record
+        """
+        user = get_jwt_identity()
+        admin = user[4]
+        user_id = user[0]
+
+        if admin != "TRUE" and user_id:
+            if self.data.update_record_geolocation(record_geolocation,record_no):
+                response_object = {
+                    'message': 'Present location has been updated successfully'
+
+                }
+                return jsonify(response_object), 202
+
+        return Error_message.no_items('record')
+
+    @jwt_required
     def delete(self,record_no):
         """
         Method to update the destination of a record  record
         """
         user = get_jwt_identity()
-        admin = user[3]
+        admin = user[4]
         user_id = user[0]
 
         if admin != "TRUE" and user_id:
             if self.data.delete_record(record_no):
                 response_object = {
                     'message': 'Record has been deleted successfully'
+
                 }
                 return jsonify(response_object), 202
         return Error_message.no_items('record')
-
-    

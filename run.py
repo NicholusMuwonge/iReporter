@@ -1,8 +1,12 @@
+"""
+app root of the api endpoints. this module runs the application
+"""
 
 from flask import Flask,json,jsonify
-from api.routes.operations_views import Routes
-from api.models.database import DatabaseConnection
+from api.views.routes import Routes
 from flask_jwt_extended import JWTManager
+from api.models.database import DatabaseConnection
+
 
 app = Flask(__name__)
 app.env = 'development'
@@ -19,7 +23,7 @@ def admin():
 
 @app.route('/')
 def index():
-    return jsonify({'message': 'Welcome dear concerned citizen'}),200
+    return jsonify({'message': 'Welcome dear concerned citizen'})
 
 
 if __name__ == '__main__':

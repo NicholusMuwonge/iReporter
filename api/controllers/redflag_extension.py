@@ -1,7 +1,7 @@
 from flask import request, jsonify
 from flask.views import MethodView
 from api.models.record_model import Record
-from api.flags.error_responses import Error_message
+from api.Error.responses import Error_message
 from api.validation.verifications import Verification
 from api.models.database import DatabaseConnection
 from flask_jwt_extended import (

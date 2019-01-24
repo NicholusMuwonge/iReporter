@@ -1,3 +1,7 @@
+"""
+Module to handle validation
+"""
+
 import re
 from api.models.database import DatabaseConnection
 
@@ -9,9 +13,19 @@ class Verification:
     data = DatabaseConnection()
 
     @staticmethod
-    def validate_email(email):
+    def check_string_of_numbers(test_data):
+        try:
+            int(test_data)
+            return True
+        except ValueError:
+            return False
+
+    @staticmethod
+    def validate_email(email) -> bool:
         """
-        ensure email address is of acceptable standards
+        Validate email address
+        :param email:
+        :return:
         """
         pattern = re.compile(r"^[A-Za-z0-9.+_-]+@[A-Za-z0-9._-]+\.[a-zA-Z]*$")
         if not pattern.match(email):
@@ -19,9 +33,33 @@ class Verification:
         return True
 
     @staticmethod
+    def validate_password(password, length) -> bool:
+        """
+        password validator
+        :param password:
+        :param length:
+        :return:
+        """
+        if length > len(password):
+            return False
+        return password.isalnum()
+
+    def check_if_email_exists(self, email):
+        """
+        Check if the email already exists
+        :param email:
+        :return:
+        """
+        if self.data.find_user_by_email(email):
+            return False
+        return True
+
+    @staticmethod
     def validate_username(user_name):
         """
-        ensure user_name is of acceptable standards
+        Username validation
+        :param name:
+        :return:
         """
         username_regex = re.compile(r"^[A-Za-z\s]{4,30}$")
         if not username_regex.match(user_name):
@@ -31,6 +69,8 @@ class Verification:
     def check_if_user_name_exists(self, user_name):
         """
         Check if the username already exists
+        :param username:
+        :return:
         """
         if self.data.find_user_by_username(user_name):
             return False
@@ -38,20 +78,14 @@ class Verification:
 
 
     @staticmethod
-    def validate_password(password, length, length1):
+    def validate_name(name):
         """
-        password strength validator
+        Username validator
+        :param name:
+        :return:
         """
-        if length > len(password)  or  length1 < len(password):
-            return False
-        return password.isalnum()  # to return password with both alphabetic,numerical characters,and some special characters. 
-
-    
-    def check_if_email_exists(self, email):
-        """
-        Check if the email already exists
-        """
-        if self.data.find_user_by_email(email):
+        username_regex = re.compile(r"^[A-Za-z\s]{4,30}$")
+        if not username_regex.match(name):
             return False
         return True
 
