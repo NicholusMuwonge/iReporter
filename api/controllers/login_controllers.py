@@ -63,11 +63,9 @@ class Login(MethodView):
             return jsonify(response_object), 404
 
     @jwt_required
-    # @swag_from('..docs/get_user_records.yml')
     def get(self, user_id):
         """
         Method to return a single users record records
-        :return:
         """
         user = get_jwt_identity()
         admin = user[3]
@@ -85,10 +83,7 @@ class Login(MethodView):
     @jwt_required
     def put(self, record_geolocation=None, record_no=None):
         """
-        Method to update the destination of a record  record
-        :param record_geolocation:
-        :param record_no:
-        :return:
+        update record_geolocation
         """
         user = get_jwt_identity()
         admin = user[3]

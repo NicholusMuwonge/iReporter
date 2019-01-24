@@ -53,8 +53,8 @@ class Record_logic(MethodView):
 
             if not self.record_title or not self.record_geolocation or not self.record_type:
                 return Error_message.empty_data_fields()
-            elif not isinstance(self.record_geolocation,float):
-                return Error_message.invalid_input()
+            # elif not isinstance(self.record_geolocation,float):
+            #     return Error_message.invalid_input()
             new_record = self.record.post_record(self.record_type,self.record_geolocation,self.record_title,str(user_id))
             response_object = {
                 'message': 'Successfully posted a new record',
@@ -66,7 +66,7 @@ class Record_logic(MethodView):
     @jwt_required
     def get(self, record_no=None):
         """
-        get method to return a list of record  records
+        get method to return a list of records
         """
         user = get_jwt_identity()
         user_id = user[0]

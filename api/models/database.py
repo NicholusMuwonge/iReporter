@@ -74,7 +74,7 @@ class DatabaseConnection:
             if self.connection is not None:
                 self.connection.close()
 
-    def insert_user(self, user_name, email, user_password):
+    def insert_user(self, user_name, email,  user_password):
         """
         add new user to database
         """

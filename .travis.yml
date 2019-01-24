@@ -3,13 +3,13 @@ python:
   - "3.5"
 install:
   - pip3 install -r requirements.txt
-#commands to run the tests
+
 services:
   - postgresql
 before_script:
   - psql -c 'create database trying;' -U postgres
 script:
-  - pytest tests/test_api.py --cov
+  - pytest tests/test.py --cov
   - coverage report
   - coveralls
 after success:
