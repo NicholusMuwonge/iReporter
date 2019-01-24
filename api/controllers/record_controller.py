@@ -66,7 +66,7 @@ class Record_logic(MethodView):
     @jwt_required
     def get(self, record_no=None):
         """
-        get method to return a list of record  records
+        get method to return a list of records
         """
         user = get_jwt_identity()
         user_id = user[0]

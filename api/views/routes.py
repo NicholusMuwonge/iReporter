@@ -43,7 +43,7 @@ class Routes:
                          view_func=Redflags.as_view('get one red flag'),
                          methods=['GET'], strict_slashes=False)
         app.add_url_rule('/api/v2/redflags/',
-                         view_func=Redflag.as_view('get all red flag'),
+                         view_func=Redflag.as_view('get all red flags'),
                          methods=['GET'], strict_slashes=False)
         app.add_url_rule('/api/v2/redflag/<int:record_no>/',
                          view_func=Redflags.as_view('delete red flag'),
