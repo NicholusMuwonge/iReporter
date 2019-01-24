@@ -36,6 +36,16 @@ class Error_message:
         return jsonify(response_object), 400
 
     @staticmethod
+    def non_apprpriate_record_type():
+        response_object = {
+            'status': 'fail',
+            'error_message': 'Invalid record type',
+            'data': False
+        }
+        return jsonify(response_object), 400
+
+
+    @staticmethod
     def missing_key(keys):
         response_object = {
             'status': 'fail',
@@ -45,12 +55,39 @@ class Error_message:
         return jsonify(response_object), 400
 
     @staticmethod
+    def empty_data_storage():
+        response_object = {
+            'status': 'success',
+            'message': 'No records present currently',
+            'data': False
+        }
+        return jsonify(response_object), 404
+
+   
+
+    @staticmethod
+    def user_absent():
+        response_object = {
+            'status': 'fail',
+            'error_message': 'User does not exist',
+            'data': False
+        }
+        return jsonify(response_object), 404
+
+    @staticmethod
+    def record_absent():
+        response_object = {
+            'status': 'fail',
+            'error_message': 'record does not exist',
+            'data': False
+        }
+        return jsonify(response_object), 404
+
+    @staticmethod
     def invalid_password():
         response_object = {
             'status': 'fail',
-            'error_message': 'Password is wrong. It should be \
-            at-least 5 characters long, and alphanumeric.It shouldnt also be \
-            longer than 13 characters',
+            'error_message': 'Password is wrong. It should be at-least 5 characters long, and alphanumeric.',
             'data': False
         }
         return jsonify(response_object), 400
@@ -94,14 +131,6 @@ class Error_message:
                    }), 400
 
     @staticmethod
-    def permission_denied():
-        response_object = {
-            'status': 'fail',
-            'message': 'Permission denied, Please Login as a user'
-        }
-        return jsonify(response_object), 403
-
-    @staticmethod
     def invalid_input():
         return jsonify({
             "status": "fail",
@@ -110,6 +139,13 @@ class Error_message:
             "data": request.get_json()
                    }), 400
 
+    @staticmethod
+    def permission_denied():
+        response_object = {
+            'status': 'fail',
+            'message': 'Permission denied, Please Login as a user'
+        }
+        return jsonify(response_object), 403
 
     @staticmethod
     def no_items(item):
@@ -128,6 +164,14 @@ class Error_message:
         return jsonify(response_object), 403
 
     @staticmethod
+    def record_status_not_found(status):
+        return jsonify({
+            "status": "fail",
+            "error_message": "Record status {} not found, \
+            only use cancelled as the value".format(status),
+        }), 404
+
+    @staticmethod
     def status_already_updated(status):
         response_object = {
             'status': 'fail',
@@ -135,11 +179,3 @@ class Error_message:
             'data': False
         }
         return jsonify(response_object), 406
-
-    @staticmethod
-    def record_status_not_found(status):
-        return jsonify({
-            "status": "fail",
-            "error_message": "Record status {} not found, \
-            only use cancelled as the value".format(status),
-        }), 404

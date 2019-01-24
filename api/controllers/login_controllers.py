@@ -1,25 +1,33 @@
+"""
+This module looks at the user login
+"""
 import datetime
 from flask import request, jsonify
 from flask.views import MethodView
-from api.flags.error_responses import Error_message
-from api.authentication.password_check import AuthenticatePassword
+from api.Error.responses import Error_message
+from api.authentication.authenticate import Authenticate
 from api.models.database import DatabaseConnection
+from api.models.record_model import Record
 from flask_jwt_extended import (
     create_access_token, jwt_required, get_jwt_identity
     )
 from api.validation.verifications import Verification
 
 
+
 class Login(MethodView):
     """
-    Login Logic
+    User login class
     """
+    destination = None
     data = DatabaseConnection()
-    auth = AuthenticatePassword()
+    auth = Authenticate()
+    order = Record()
     val = Verification()
 
     
     def post(self):
+        # to get post data
         post_data = request.get_json()
         keys = ('user_name', 'user_password')
         if not set(keys).issubset(set(post_data)):
@@ -33,7 +41,7 @@ class Login(MethodView):
             return Error_message.empty_data_fields()
         user = self.data.find_user_by_username(user_name)
 
-        if user and AuthenticatePassword.verify_password(
+        if user and Authenticate.verify_password(
             user_password, user[4]
             ):
             response_object = {
@@ -54,11 +62,12 @@ class Login(MethodView):
             }
             return jsonify(response_object), 404
 
-
     @jwt_required
+    # @swag_from('..docs/get_user_records.yml')
     def get(self, user_id):
         """
-        Method to return a single users records
+        Method to return a single users record records
+        :return:
         """
         user = get_jwt_identity()
         admin = user[3]
@@ -68,18 +77,18 @@ class Login(MethodView):
             my_records = self.data.get_records_for_specific_users(user_id)
             if isinstance(my_records, object):
                 user=self.data.find_user_by_id(user_id)
-                return jsonify(my_records), 200
+                return (my_records), 200
             else:
                 return Error_message.no_items('record')
         return Error_message.permission_denied()
 
-
-   
-
     @jwt_required
     def put(self, record_geolocation=None, record_no=None):
         """
-        update record geolocation by user
+        Method to update the destination of a record  record
+        :param record_geolocation:
+        :param record_no:
+        :return:
         """
         user = get_jwt_identity()
         admin = user[3]
@@ -88,7 +97,8 @@ class Login(MethodView):
         if admin == "FALSE" and user_id:
             post_data=request.get_json()
             keys=('record_geolocation')
-            
+            # if not set(keys).issubset((post_data)):
+            #     return Error_message.missing_key(keys)
             if not keys:
                 return Error_message.missing_fields(record_geolocation)
             try:
