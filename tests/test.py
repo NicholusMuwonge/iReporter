@@ -237,7 +237,7 @@ class test_feature(unittest.TestCase):
             headers=dict(
                 Authorization='Bearer ' + self.Token
             ),
-            data=json.dumps(dict(record_title='theft',record_type='redflag',record_geolocation = "0.88899 -0.9000")),
+            data=json.dumps(dict(record_title='theft',record_type='intervention',record_geolocation = "0.88899 -0.9000")),
             content_type="application/json"
         )
 
@@ -401,6 +401,45 @@ class test_feature(unittest.TestCase):
         # self.assertFalse(data['data'])
         self.assertTrue(add_record.content_type, 'application/json')
         self.assertEqual(add_record.status_code, 200)
+
+
+    def test_get_delete_redflag(self):
+        add_record = self.client.delete('/api/v2/redflag/12/',headers={'Authorization': 'Bearer ' + self.Token},content_type = 'application/json' )
+
+        data = json.loads(add_record.data.decode())
+        print(data)
+        # self.assertTrue(data['status'], 'fail')
+        # self.assertTrue(data['error_message'], 'Please use character strings')
+        # self.assertFalse(data['data'])
+        self.assertTrue(add_record.content_type, 'application/json')
+        self.assertEqual(add_record.status_code, 202)
+
+    def test_get_one_intervention_record(self):
+        add_record = self.client.get('/api/v2/intervention/25/',headers={'Authorization': 'Bearer ' + self.Token},content_type = 'application/json' )
+
+        data = json.loads(add_record.data.decode())
+        print(data)
+        # self.assertTrue(data['status'], 'fail')
+        # self.assertTrue(data['error_message'], 'Please use character strings')
+        # self.assertFalse(data['data'])
+        self.assertTrue(add_record.content_type, 'application/json')
+        self.assertEqual(add_record.status_code, 200)
+
+    
+    def test_get_all_interventions(self):
+        add_record = self.client.get('/api/v2/interventions/',headers={'Authorization': 'Bearer ' + self.Token},content_type = 'application/json' )
+
+        data = json.loads(add_record.data.decode())
+        print(data)
+        # self.assertTrue(data['status'], 'fail')
+        # self.assertTrue(data['error_message'], 'Please use character strings')
+        # self.assertFalse(data['data'])
+        self.assertTrue(add_record.content_type, 'application/json')
+        self.assertEqual(add_record.status_code, 200)
+
+
+   
+
 
 if __name__  ==  "__main__":
     unittest.main()
