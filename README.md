@@ -7,7 +7,7 @@
 
 
 ### About
-<strong>IREPORTER<strong> is an application thats supposed to be used by some one to raise an issue to the authorities about corruption,and any other grievance to the authority.
+<strong>IREPORTER<strong> is an application thats is used by someone to raise an issue to the authorities about corruption,and any other grievance to the authority in their communities
 
 ### Features
 1. Create a redflag record (title, record_type,record geolocation)
@@ -25,7 +25,8 @@ https://nicholusmuwonge.github.io/iReporter/UI/index
 This link points to the user interface template is hosted on gh-pages.
 
 #### Heroku:    
-https://appireporter.herokuapp.com/
+https://appireporter.herokuapp.com/ - challenge 2
+https://databasetests.herokuapp.com/ -challenge-3
 
 This link points to the api that is hosted on Heroku.
 
@@ -46,6 +47,7 @@ The ft-challenge-two folder contains the system backend services.
 - [Python](https://www.python.org/) A general purpose programming language
 - [Pip](https://pypi.org/project/pip/) A tool for installing python packages
 - [Virtualenv](https://virtualenv.pypa.io/en/stable/)  A tool to create isolated Python environments
+- [Postgres] A type of SQL database used to persist data for longterm purposes.
 
 #### Development setup
 - Create a virtual environment and activate it
@@ -68,9 +70,9 @@ The ft-challenge-two folder contains the system backend services.
 
 | End Point                                           | Verb |Use                                       |
 | ----------------------------------------------------|------|------------------------------------------|
-|`/api/v1/records`                                    |GET   |Gets all redflag records                  |
+|`/api/v2/records/`                                    |GET   |Gets all records  regardless the type                |
 |`/api/v1/records/<int:record_no>`                    |GET   |Gets a specific redflag record            |
-|`/api/v1/records`                                    |POST  |Creates a new redflag record              |
+|`/api/v2/records/`                                    |POST  |Creates a new redflag record              |
 |`/api/v1/<int:record_no>/records`                    |PUT   |Updates the status of a redflag record    |
 |`/api/v1/<int:record_no>/records`                    |DELETE|Deletes a specific redflag record         |
 
