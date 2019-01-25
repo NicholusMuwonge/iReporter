@@ -94,18 +94,22 @@ class Login(MethodView):
             keys=('record_geolocation')
             # if not set(keys).issubset((post_data)):
             #     return Error_message.missing_key(keys)
-            if not keys:
+            if not keys in post_data:
                 return Error_message.missing_fields(record_geolocation)
             try:
                 record_geolocation=post_data['record_geolocation'].strip()
             except AttributeError:
                     return Error_message.invalid_data_format()
+
+            if not record_geolocation:
+                return Error_message.missing_fields(record_geolocation)
             if self.data.update_record_geolocation(record_geolocation,record_no):
                 response_object = {
                     'message': 'Present location has\
                     been updated successfully'
                     }
                 return jsonify(response_object), 202
-
-            return Error_message.no_items('record')
+            elif not self.data.update_record_geolocation(record_geolocation,record_no):
+                
+                return Error_message.no_items('record')
         return Error_message.permission_denied()
