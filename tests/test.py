@@ -263,8 +263,7 @@ class test_feature(unittest.TestCase):
 
 
     def test_get_one_user_reccord_admin(self):
-    #     login = self.login_user('Apple', 'acireba')
-    #     self.post_record("corruption", "redflag", "0.000004")
+
         get_user_record=self.client.get('/api/v2/auth/users/26/records/',
         headers=dict(
                 Authorization='Bearer ' + self.Token
@@ -379,8 +378,29 @@ class test_feature(unittest.TestCase):
         # self.assertFalse(data['data'])
         self.assertTrue(add_record.content_type, 'application/json')
         self.assertEqual(add_record.status_code, 202)
-    
 
+    def test_get_one_redflag_record(self):
+        add_record = self.client.get('/api/v2/redflag/13/',headers={'Authorization': 'Bearer ' + self.Token},content_type = 'application/json' )
+
+        data = json.loads(add_record.data.decode())
+        print(data)
+        # self.assertTrue(data['status'], 'fail')
+        # self.assertTrue(data['error_message'], 'Please use character strings')
+        # self.assertFalse(data['data'])
+        self.assertTrue(add_record.content_type, 'application/json')
+        self.assertEqual(add_record.status_code, 200)
+
+    
+    def test_get_all_redflags(self):
+        add_record = self.client.get('/api/v2/redflags/',headers={'Authorization': 'Bearer ' + self.Token},content_type = 'application/json' )
+
+        data = json.loads(add_record.data.decode())
+        print(data)
+        # self.assertTrue(data['status'], 'fail')
+        # self.assertTrue(data['error_message'], 'Please use character strings')
+        # self.assertFalse(data['data'])
+        self.assertTrue(add_record.content_type, 'application/json')
+        self.assertEqual(add_record.status_code, 200)
 
 if __name__  ==  "__main__":
     unittest.main()
