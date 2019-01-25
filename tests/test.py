@@ -230,6 +230,25 @@ class test_feature(unittest.TestCase):
         self.assertTrue(create_record.content_type, 'application/json')
         self.assertEqual(create_record.status_code, 400)
 
+    def test_post_record(self):
+        
+        create_record= self.client.post(
+            '/api/v2/records/',
+            headers=dict(
+                Authorization='Bearer ' + self.Token
+            ),
+            data=json.dumps(dict(record_title='theft',record_type='redflag',record_geolocation = "0.88899 -0.9000")),
+            content_type="application/json"
+        )
+
+        data = json.loads(create_record.data.decode())
+        print(data)
+        # self.assertTrue(data['status'], 'success')
+        self.assertTrue(data['message'], 'new record successfully registered')
+        self.assertTrue(data['data'])
+        self.assertTrue(create_record.content_type, 'application/json')
+        self.assertEqual(create_record.status_code, 201)
+
     def test_get_one_user_reccord(self):
         # login = self.login_user('steven', 'straightup')
         # self.post_record("corruption", "redflag", "0.000004")
