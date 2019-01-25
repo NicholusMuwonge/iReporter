@@ -437,6 +437,15 @@ class test_feature(unittest.TestCase):
         self.assertTrue(add_record.content_type, 'application/json')
         self.assertEqual(add_record.status_code, 200)
 
+    def test_get_specific_user_files(self):
+        add_record = self.client.get('/api/v2/auth/users/15/records/',headers={'Authorization': 'Bearer ' + self.Token},content_type = 'application/json' )
+        data = json.loads(add_record.data.decode())
+        print(data)
+        # self.assertTrue(data['error_message'], 'Please use character strings')
+        # self.assertFalse(data['data'])
+        self.assertTrue(add_record.content_type, 'application/json')
+        self.assertEqual(add_record.status_code, 200)
+
 
    
 
