@@ -11,10 +11,10 @@ omit =
        *__init__.py
        */api\__init__.py
        */api\controllers\__init__.py
-       */api\handlers\__init__.py
+       */api\Error\__init__.py
        */api\models\__init__.py
        */api\tests\__init__.py
-       */api\utils\__init__.py
+       */api\validation\__init__.py
        */api\views\__init__.py
 
 

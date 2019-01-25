@@ -232,7 +232,7 @@ class DatabaseConnection:
 
 
     def get_one_redflags(self,record_no):
-        redflags=  "SELECT * FROM records WHERE record_type ='redflags' and record_no ='{}' ".format(
+        redflags=  "SELECT * FROM records WHERE record_type ='redflag' and record_no ='{}' ".format(
             record_no
             )
         self.dict_cursor.execute(redflags)
@@ -269,6 +269,54 @@ class DatabaseConnection:
         """
         records="DELETE FROM records \
         WHERE record_no = '{}' and record_type='redflag' ".format(record_no)
+        delete=self.cursor.execute(records)
+        if delete:
+            return ({
+                "message":"item successfully deleted"
+                })
+        else:
+            return ({
+                'message':'please try again or item not found'
+                })
+
+    def get_one_Interventionn(self,record_no):
+            interventions=  "SELECT * FROM records WHERE record_type ='intervention' and record_no ='{}' ".format(
+                record_no
+                )
+            self.dict_cursor.execute(interventions)
+            get_records = self.dict_cursor.fetchall()
+            return jsonify(get_records)
+
+
+    def get_all_interventions(self):
+        interventions=  "SELECT * FROM records WHERE record_type ='intervention';"
+        self.dict_cursor.execute(interventions)
+        get_records = self.dict_cursor.fetchall()
+        return jsonify(get_records)
+
+
+    def update_intervention_geolocation(self,
+        record_geolocation, record_no):
+        """
+        user updates a specific record by adjusting the geolocation figures
+        :param record_geolocation:
+        :param record_no:
+        :return:
+        """
+        record_update = "UPDATE records SET record_geolocation = '{}' \
+        WHERE record_no = '{}' and record_type='intervention'".format(
+            record_geolocation, record_no
+            )
+        self.cursor.execute(record_update)
+        return True
+
+    
+    def delete_intervention(self, record_no):
+        """
+        Delete a record
+        """
+        records="DELETE FROM records \
+        WHERE record_no = '{}' and record_type='intervention' ".format(record_no)
         delete=self.cursor.execute(records)
         if delete:
             return ({
