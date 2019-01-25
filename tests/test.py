@@ -29,7 +29,9 @@ class test_feature(unittest.TestCase):
         data = json.dumps({"user_name":"geraldine","user_password":'gerry1'}),\
         content_type = ('application/json'))
         login_decode_message= json.loads(login.data.decode())
-        self.Token = login_decode_message.get('token')
+        # print(login_decode_message)
+        self.Token = login_decode_message.get('access_token')
+        # print(self.Token)
 
     @classmethod
     def tearDown(self):
@@ -228,17 +230,17 @@ class test_feature(unittest.TestCase):
         self.assertTrue(create_record.content_type, 'application/json')
         self.assertEqual(create_record.status_code, 400)
 
-    # def test_get_one_user_reccord(self):
-    #     login = self.login_user('steven', 'straightup')
-    #     self.post_record("corruption", "redflag", "0.000004")
-    #     get_user_record=self.client.get('/api/v2/auth/users/26/records/',
-    #     headers=dict(
-    #             Authorization='Bearer ' + json.loads(login.data.decode())['access_token']
-    #         ),
-    #                     content_type = 'application/json')
-    #     data = json.loads(get_user_record.data.decode())
-    #     self.assertTrue(get_user_record.content_type,'application/json')
-    #     self.assertEqual(get_user_record.status_code, 200)       
+    def test_get_one_user_reccord(self):
+        # login = self.login_user('steven', 'straightup')
+        # self.post_record("corruption", "redflag", "0.000004")
+        get_user_record=self.client.get('/api/v2/auth/users/26/records/',
+        headers=dict(
+                Authorization='Bearer ' + self.Token
+            ),
+                        content_type = 'application/json')
+        data = json.loads(get_user_record.data.decode())
+        self.assertTrue(get_user_record.content_type,'application/json')
+        self.assertEqual(get_user_record.status_code, 200)       
 
 
     # def test_get_one_user_reccord_admin(self):
@@ -304,6 +306,34 @@ class test_feature(unittest.TestCase):
     #     data = json.loads(get_user_record.data.decode())
     #     self.assertTrue(get_user_record.content_type,'application/json')
     #     self.assertEqual(get_user_record.status_code, 200)
+
+
+
+    def test_post_record_with_wrong_data_type(self):
+        """
+        Test for adding a parcel order with wrong data type
+        :return:
+        """
+
+        # signup user
+        # self.register_user('Suzan', 'sue@gmail.com',  'acireba')
+
+        # # user login
+        # login = self.login_user('Suzan', 'acireba')
+
+        # Add parcel order
+        # print(login.data.decode())
+        # add_parcel = self.post_record('', "Bunga", "Gaba",
+                                            #   json.loads(login.data.decode())['access_token'])
+        add_record = self.client.post('/api/v2/records/',data=json.dumps(dict(record_title='pollution',record_type='')),content_type = 'application/json' ,headers={'Authorization': 'Bearer ' + self.Token})
+
+        data = json.loads(add_record.data.decode())
+        print(data)
+        self.assertTrue(data['status'], 'fail')
+        self.assertTrue(data['error_message'], 'Please use character strings')
+        # self.assertFalse(data['data'])
+        self.assertTrue(add_record.content_type, 'application/json')
+        self.assertEqual(add_record.status_code, 400)
 
 
     
