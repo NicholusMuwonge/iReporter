@@ -369,7 +369,16 @@ class test_feature(unittest.TestCase):
         self.assertTrue(add_record.content_type, 'application/json')
         self.assertEqual(add_record.status_code, 401)
 
+    def test_delete_record(self):
+        add_record = self.client.delete('/api/v2/records/10/delete/',headers={'Authorization': 'Bearer ' + self.Token},content_type = 'application/json' )
 
+        data = json.loads(add_record.data.decode())
+        print(data)
+        # self.assertTrue(data['status'], 'fail')
+        # self.assertTrue(data['error_message'], 'Please use character strings')
+        # self.assertFalse(data['data'])
+        self.assertTrue(add_record.content_type, 'application/json')
+        self.assertEqual(add_record.status_code, 202)
     
 
 
