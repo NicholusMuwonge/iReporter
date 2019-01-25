@@ -243,17 +243,17 @@ class test_feature(unittest.TestCase):
         self.assertEqual(get_user_record.status_code, 200)       
 
 
-    # def test_get_one_user_reccord_admin(self):
+    def test_get_one_user_reccord_admin(self):
     #     login = self.login_user('Apple', 'acireba')
     #     self.post_record("corruption", "redflag", "0.000004")
-    #     get_user_record=self.client.get('/api/v2/auth/users/26/records/',
-    #     headers=dict(
-    #             Authorization='Bearer ' + json.loads(login.data.decode())['access_token']
-    #         ),
-    #                     content_type = 'application/json')
-    #     data = json.loads(get_user_record.data.decode())
-    #     self.assertTrue(get_user_record.content_type,'application/json')
-    #     self.assertEqual(get_user_record.status_code, 403)        
+        get_user_record=self.client.get('/api/v2/auth/users/26/records/',
+        headers=dict(
+                Authorization='Bearer ' + self.Token
+            ),
+                        content_type = 'application/json')
+        data = json.loads(get_user_record.data.decode())
+        self.assertTrue(get_user_record.content_type,'application/json')
+        self.assertEqual(get_user_record.status_code, 200)        
 
 
     def test_get_one_user_reccord_when_not_logged_in(self):
@@ -267,45 +267,34 @@ class test_feature(unittest.TestCase):
         self.assertEqual(get_user_record.status_code, 401)
 
 
-    # def test_get_one_record(self):
+    def test_get_one_record(self):
     #     login = self.login_user('travis', 'straightup')
     #     self.post_record("corruption", "redflag", "0.000004")
-    #     self.post_record('fire_breakout','intervention','-0.0008')
-    #     get_user_record=self.client.get('/api/v2/auth/record/8'
-    #         ,headers=dict(
-    #             Authorization='Bearer ' + json.loads(login.data.decode())['access_token']
-    #         ),
-    #                     content_type = 'application/json'
-    #         )
-    #     data = json.loads(get_user_record.data.decode())
-    #     self.assertTrue(get_user_record.content_type,'application/json')
-    #     self.assertEqual(get_user_record.status_code, 200)
+        self.post_record('fire_breakout','intervention','-0.0008')
+        get_user_record=self.client.get('/api/v2/auth/record/8'
+            ,headers=dict(
+                Authorization='Bearer ' + self.Token
+            ),
+                        content_type = 'application/json'
+            )
+        data = json.loads(get_user_record.data.decode())
+        self.assertTrue(get_user_record.content_type,'application/json')
+        self.assertEqual(get_user_record.status_code, 200)
 
 
-    # def test_get_one_record_not_loged_in(self):
+    def test_get_one_record_not_loged_in(self):
         
     #     self.post_record("corruption", "redflag", "0.000004")
     #     self.post_record('fire_breakout','intervention','-0.0008')
-    #     get_user_record=self.client.get('/api/v2/auth/record/8',
-    #                     content_type = 'application/json'
-    #         )
-    #     data = json.loads(get_user_record.data.decode())
-    #     self.assertTrue(get_user_record.content_type,'application/json')
-    #     self.assertEqual(get_user_record.status_code, 401)
+        get_user_record=self.client.get('/api/v2/auth/record/8',
+                        content_type = 'application/json'
+            )
+        data = json.loads(get_user_record.data.decode())
+        self.assertTrue(get_user_record.content_type,'application/json')
+        self.assertEqual(get_user_record.status_code, 401)
     
-    # def test_get_one_record_by_admin(self):
-    #     login = self.login_user('Apple', 'acireba')
-    #     self.post_record("corruption", "redflag", "0.000004")
-    #     self.post_record('fire_breakout','intervention','-0.0008')
-    #     get_user_record=self.client.get('/api/v2/auth/record/8'
-    #         ,headers=dict(
-    #             Authorization='Bearer ' + json.loads(login.data.decode())['access_token']
-    #         ),
-    #                     content_type = 'application/json'
-    #         )
-    #     data = json.loads(get_user_record.data.decode())
-    #     self.assertTrue(get_user_record.content_type,'application/json')
-    #     self.assertEqual(get_user_record.status_code, 200)
+    #
+    
 
 
 
@@ -315,16 +304,6 @@ class test_feature(unittest.TestCase):
         :return:
         """
 
-        # signup user
-        # self.register_user('Suzan', 'sue@gmail.com',  'acireba')
-
-        # # user login
-        # login = self.login_user('Suzan', 'acireba')
-
-        # Add parcel order
-        # print(login.data.decode())
-        # add_parcel = self.post_record('', "Bunga", "Gaba",
-                                            #   json.loads(login.data.decode())['access_token'])
         add_record = self.client.post('/api/v2/records/',data=json.dumps(dict(record_title='pollution',record_type='')),content_type = 'application/json' ,headers={'Authorization': 'Bearer ' + self.Token})
 
         data = json.loads(add_record.data.decode())
@@ -335,7 +314,45 @@ class test_feature(unittest.TestCase):
         self.assertTrue(add_record.content_type, 'application/json')
         self.assertEqual(add_record.status_code, 400)
 
+    def test_update_record(self):
+        add_record = self.client.put('/api/v2/record_no/9/',data=json.dumps(dict(record_geolocation='0.988777 0.63782')),content_type = 'application/json' ,headers={'Authorization': 'Bearer ' + self.Token})
+
+        data = json.loads(add_record.data.decode())
+        print(data)
+        # self.assertTrue(data['status'], 'fail')
+        # self.assertTrue(data['error_message'], 'Please use character strings')
+        # self.assertFalse(data['data'])
+        self.assertTrue(add_record.content_type, 'application/json')
+        self.assertEqual(add_record.status_code, 202)
+    
+
+
+    def test_update_record_with_empty_field(self):
+        add_record = self.client.put('/api/v2/record_no/9/',data=json.dumps(dict(record_geolocation='')),content_type = 'application/json' ,headers={'Authorization': 'Bearer ' + self.Token})
+
+        data = json.loads(add_record.data.decode())
+        print(data)
+        # self.assertTrue(data['status'], 'fail')
+        # self.assertTrue(data['error_message'], 'Please use character strings')
+        # self.assertFalse(data['data'])
+        self.assertTrue(add_record.content_type, 'application/json')
+        self.assertEqual(add_record.status_code, 400)
+
+
+    def test_update_record_without_loging_in(self):
+        add_record = self.client.put('/api/v2/record_no/9/',data=json.dumps(dict(record_geolocation='0.900000')),content_type = 'application/json' )
+
+        data = json.loads(add_record.data.decode())
+        print(data)
+        # self.assertTrue(data['status'], 'fail')
+        # self.assertTrue(data['error_message'], 'Please use character strings')
+        # self.assertFalse(data['data'])
+        self.assertTrue(add_record.content_type, 'application/json')
+        self.assertEqual(add_record.status_code, 401)
+
 
     
+
+
 if __name__  ==  "__main__":
     unittest.main()
