@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.com/NicholusMuwonge/iReporter.svg?branch=ft-challenge-three)](https://travis-ci.com/NicholusMuwonge/iReporter)
-[![Coverage Status](https://coveralls.io/repos/github/NicholusMuwonge/iReporter/badge.svg?branch=ft-challenge-three&service)](https://coveralls.io/github/NicholusMuwonge/iReporter?branch=ft-challenge-three)
+[![Coverage Status](https://coveralls.io/repos/github/NicholusMuwonge/level_up-/badge.svg?branch=ft-challenge-three)](https://coveralls.io/github/NicholusMuwonge/level_up-?branch=ft-challenge-three)
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/95c6a67ee8716ddebf6b/maintainability)](https://codeclimate.com/github/NicholusMuwonge/iReporter/maintainability)
 
