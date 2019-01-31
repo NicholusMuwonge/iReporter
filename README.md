@@ -1,3 +1,4 @@
+
 [![Build Status](https://travis-ci.com/NicholusMuwonge/iReporter.svg?branch=ft-challenge-two)](https://travis-ci.com/NicholusMuwonge/iReporter)
 [![Coverage Status](https://coveralls.io/repos/github/NicholusMuwonge/iReporter/badge.svg?branch=ft-challenge-two&)](https://coveralls.io/github/NicholusMuwonge/iReporter?branch=ft-challenge-two)
 
@@ -96,11 +97,6 @@ pytest --cov
 ## Acknowledgments
 
 * My Family for supporting me and Andela bootcamp fellows and LFA's that made this possible for me.
-
-
-
-
-
 
 
 
