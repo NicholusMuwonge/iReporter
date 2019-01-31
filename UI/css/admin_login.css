@@ -1,0 +1,104 @@
+body {
+	padding: 0 !important;
+	margin: 0 !important;
+	color: #000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	
+}
+
+
+
+.top-padding{
+	margin-top: 10%;
+}
+.login_background{
+	background-image: url(images/tablesetting2.jpg);
+}
+
+.body-color {
+	background: #efefef;
+}
+
+p {
+	font-size: 13px;
+	color: #222;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+h1{
+	color: #000;
+	font-family: "Open Sans", sans-serif;
+	line-height: 18px;
+}
+h1 {
+	font-size: 28px;
+	text-transform: none;
+}
+select{
+	width: 100%;
+	margin-bottom: 10px;
+	height: 35px;
+	padding: 5px;
+	text-align: center;
+	outline: none;
+	border: 1px solid #ddd;
+	border-radius:7px;
+}
+input[type="text"], input[type="email"], input[type="password"], input[type="number"] 
+{
+	border-radius:7px; 
+	width: 100%;
+	margin-bottom: 10px;
+	height: 25px;
+	padding: 5px;
+	text-align: center;
+	outline: none;
+	border: 1px solid #ddd;
+}
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+	border: #14B9D6 1px solid;
+	border-radius:7px;
+	padding: 5px;
+	outline: none;
+	
+	border-radius:7px;
+	background-color: aliceblue;
+}
+button {
+	cursor: pointer;
+	margin-top: 10px;
+	width: 103%;
+	margin-bottom: 10px;
+	color:darkcyan;
+	border: darkslategray 0.4px solid;
+	height: 40px;
+	background-color:lightgrey ;
+	padding: 5px;
+	text-align: center;
+	border-radius:7px;
+}
+
+form
+{
+	background-color: white; 
+  color:brown;
+  font-weight: bold;
+  border: 2px solid grey;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;
+  padding: 7px;
+  text-align: center;
+  border-radius: 7px;
+  margin-left: 6%;
+  height:450px;
+  background-image: url(images/glass.jpg)
+}
+
+
+
+
+ 

@@ -1,0 +1,167 @@
+body,html
+{
+    font-family: Arial, Helvetica, sans-serif;
+    color: black solid 1px;
+    padding:0px;
+    font-size: 15px;
+
+}
+
+#two
+{
+    float: left;
+    font-style: normal;
+    /*word-spacing: 10px;*/
+    
+}
+#three
+{
+    float: right;
+    font-style: unset;
+    margin-top: 0px;
+    text-decoration:none;
+}
+header
+{
+    width: 100%;
+	height: 10%;
+	background-color: #222;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.01);
+
+   
+}
+.first
+{
+    width: 900px;
+	float: left;
+	text-align: right;
+	color: #fff;
+	font-size: 17px;
+	height: 0px;
+	list-style: none;
+	margin-top: 0; 
+}
+.first li
+{
+    float: left;
+	padding:10px;
+	text-transform: capitalize;
+	margin-top: 0%;
+}
+.first li:last-child
+{
+    float: left;
+}
+
+.first li ul
+{
+    height: 20%;
+	display: none;
+	float: left;
+	list-style: none;
+	background-color: #333;
+	
+}
+
+.first a
+{
+    color:rgb(15, 48, 90);
+	text-decoration: none !important;
+	float: left;
+}
+
+.first li:hover
+{
+    background-color: azure;
+    border-bottom-color: aqua;
+}
+h1
+{
+    min-height:300px;
+    text-align: unset;
+    padding-right: 15%;
+}
+
+input[type="text"] {
+	border-radius:7px; 
+	width: 50%;
+	margin-bottom: 30px;
+	height: 40px;
+	padding: 5px;
+	text-align: center;
+	outline: none;
+    border: 1px solid rgb(20, 5, 5);
+    margin-top: -30%;
+}
+input[type="text"] {
+	border-radius:7px; 
+	width: 70%;
+	margin-bottom: 30px;
+	height: 25px;
+	padding: 5px;
+	text-align: center;
+	outline: none;
+    border: 1px solid rgb(20, 5, 5);
+    margin-top: -30%;
+    margin-left:6%;
+}
+
+button{
+	cursor: pointer;
+	margin-top: -1px;
+	width: 6%;
+	margin-bottom: -1px;
+	color:teal;
+	border: 1px solid black;
+	height: 40px;
+	background-color:gold palevioletred;
+	padding: 3px;
+	text-align: center;
+	border-radius:7px;
+	
+}
+h1{
+    min-height: 40%;
+    margin-left: 30%;
+}
+select
+{
+    border-radius:7px; 
+	width: 40%;
+	margin-bottom: 30px;
+	height: 29px;
+	padding: 5px;
+	text-align: center;
+	outline: none;
+    border: 1px solid rgb(20, 5, 5);
+    margin-top: -30%;
+    margin-left: 2.5%;
+}
+textarea
+{
+    border-radius:7px; 
+	width: 65%;
+	margin-bottom: -90px;
+	height: 20px;
+	padding: 50px;
+	text-align: center;
+	outline: none;
+    border: 1px solid rgb(20, 5, 5);
+    margin-top: -30%;
+    margin-left: 2.5%;
+}
+input[type="file"]
+{
+    
+	margin-top: -15%;
+	color: aqua;
+}
+
+#geo
+{
+	margin-top: 7%;
+}
+
+h2{
+	margin-left:10%;
+}
