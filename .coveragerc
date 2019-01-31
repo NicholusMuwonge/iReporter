@@ -1,8 +1,24 @@
-[report]
-
 [run]
 
+[report]
 omit =
     
     */virtualenv/*
     
+       */venv/*
+       */python?.?/*
+       */site-packages/nose/*
+       */__pycache__/*
+       *.pyc
+       */mymodule/tests/*
+       *__init__.py
+       */api\__init__.py
+       */api\controllers\__init__.py
+       */api\Error\__init__.py
+       */api\models\__init__.py
+       */api\tests\__init__.py
+       */api\validation\__init__.py
+       */api\views\__init__.py
+
+
+
