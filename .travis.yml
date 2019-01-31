@@ -1,0 +1,24 @@
+
+language: python
+
+python:  
+  - "3.6.1"
+
+ 
+install:
+  - "pip install -r requirements.txt"
+  - "pip install pytest pytest-cov"
+  - "pip install coveralls"
+  - "pip install PyYAML"
+  
+  
+ 
+  
+script:   
+  - pytest test.py --cov
+  # - py.test  test.py 
+  - coverage report
+  - coveralls
+
+after success:
+  - coveralls

@@ -1,0 +1,8 @@
+[report]
+
+[run]
+
+omit =
+    
+    */virtualenv/*
+    
