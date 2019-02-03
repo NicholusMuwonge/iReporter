@@ -99,7 +99,7 @@ class Error_message:
             "status": "fail",
             "error_message": "User email {0} is wrong, \
             It should be in the format (xxxxx@xxxx.xxx).format(req['email']",
-            "data": req
+            "data": False
 
         }), 400
 

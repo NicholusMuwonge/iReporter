@@ -3,7 +3,7 @@ Module to handle url requests
 """
 from api.controllers.signup_controllers import Signup
 from api.controllers.login_controllers import Login
-from api.controllers.record_controller import Record_logic
+from api.controllers.record_controller import Record_logic,Intervention,Extension
 from api.controllers.red_flag import Redflags
 from api.controllers.redflag_extension import Redflag
 
@@ -48,3 +48,18 @@ class Routes:
         app.add_url_rule('/api/v2/redflag/<int:record_no>/',
                          view_func=Redflags.as_view('delete red flag'),
                          methods=['DELETE'], strict_slashes=False)
+        app.add_url_rule('/api/v2/redflag/update/<int:record_no>/',
+                         view_func=Redflags.as_view('update red flag'),
+                         methods=['PUT'], strict_slashes=False)
+        app.add_url_rule('/api/v2/intervention/<int:record_no>/',
+                         view_func=Intervention.as_view('get one intervention'),
+                         methods=['GET'], strict_slashes=False)
+        app.add_url_rule('/api/v2/interventions/',
+                         view_func=Extension.as_view('get all interventions'),
+                         methods=['GET'], strict_slashes=False)
+        app.add_url_rule('/api/v2/interventions/<int:record_no>/',
+                         view_func=Intervention.as_view('delete interventions'),
+                         methods=['DELETE'], strict_slashes=False)
+        app.add_url_rule('/api/v2/intervention/update/<int:record_no>/',
+                         view_func=Intervention.as_view('update interventions'),
+                         methods=['PUT'], strict_slashes=False)

@@ -31,7 +31,7 @@ class Record:
         post new intervention record
         """
         record_placed = self.db.post_record(
-            record_type, record_title, record_geolocation, user_id
+             record_geolocation,record_title,record_type, user_id
             )
 
         return record_placed

@@ -120,26 +120,27 @@ class Record_logic(MethodView):
 
             post_data = request.get_json()
 
-            key = "status"
-            status = ['Approved','Denied']
+            # key = "status"
+            statuses = ['Under Investigation','Denied','Resolved']
 
-            if key in post_data:
-                try:
-                    status = post_data['status'].strip()
-                except AttributeError:
-                    return Error_message.invalid_data_format()
-                if not self.val.validate_string_input(status):
-                    return Error_message.invalid_input()
-                if not status:
-                    return Error_message.empty_data_fields()
-                if status not in status:
-                    return Error_message.record_status_not_found(status)
-                updated_status = self.data.change_status(status, record_no)
-                if isinstance(updated_status, object):
-                    response_object = {
-                        'message': 'Status has been updated successfully'
-                    }
-                    return jsonify(response_object), 202
+            # if key in post_data:
+            try:
+                self.status = post_data['status'].strip()
+            except AttributeError:
+                return Error_message.invalid_data_format()
+            if not self.val.validate_string_input(self.status):
+                return Error_message.invalid_input()
+            if not self.status:
+                return Error_message.empty_data_fields()
+            for status in statuses:
+                if self.status not in statuses:
+                    return Error_message.record_status_not_found(self.status)
+            updated_status = self.data.change_status(self.status, record_no)
+            if isinstance(updated_status, object):
+                response_object = {
+                    'message': 'Status has been updated successfully'
+                }
+                return jsonify(response_object), 202
         return Error_message.denied_permission()
 
 
@@ -172,10 +173,122 @@ class Record_logic(MethodView):
         user_id = user[0]
 
         if admin != "TRUE" and user_id:
-            if self.data.delete_record(record_no):
+            record_to_be_deleted = self.data.delete_record(record_no)
+            if record_to_be_deleted:
                 response_object = {
                     'message': 'Record has been deleted successfully'
 
                 }
                 return jsonify(response_object), 202
+            else:
+                return jsonify({
+                    'message': 'record you are trying to delete is non existent',
+                    "status":"fail",
+                    "data":False
+                }),404
+                # return Error_message.no_items('record')
+        return Error_message.permission_denied()
+
+
+class Intervention(MethodView):
+    record_title = None
+    record_geolocation = None
+    record_type = None
+    status='Under Investigation'
+    val = Verification()
+    record_data = Error_message()
+    data = DatabaseConnection()
+    record=Record()
+
+    
+    @jwt_required
+    def get(self, record_no):
+        """
+        get method to return a list of records
+        """
+        user = get_jwt_identity()
+        user_id = user[0]
+        admin = user[3]
+
+        if admin == "FALSE" or  admin == "TRUE" and user_id:  # changed this authorization, please check it out.
+            if record_no:
+                all_redflags=self.data.get_one_Interventionn(record_no)
+                return all_redflags, 200
+            else:
+                return Error_message.no_items('intervention')
+        return Error_message.denied_permission()
+
+
+    
+
+    @jwt_required
+    def delete(self,record_no):
+        """
+        method to  delete record
+        """
+        user = get_jwt_identity()
+        admin = user[3]
+        user_id = user[0]
+
+        if admin != "TRUE" and user_id:
+            if self.data.delete_intervention(record_no):
+                response_object = {
+                    'message': 'Record has been deleted successfully'
+                }
+                return jsonify(response_object), 202
+            return ('record not found'),404
         return Error_message.no_items('record')
+
+    @jwt_required
+    def put(self,record_no,record_geolocation):
+        """
+        Method to update the record_geolocation
+        """
+        user = get_jwt_identity()
+        admin = user[3]
+        user_id = user[0]
+
+        if admin != "TRUE" and user_id:
+            post_data = request.get_json()
+            # if key in post_data:
+            try:
+                self.record_geolocation = post_data['record_geolocation'].strip()
+            except AttributeError:
+                return Error_message.invalid_data_format()
+            if not self.val.validate_string_input(self.record_geolocation):
+                return Error_message.invalid_input()
+            if not self.status:
+                return Error_message.empty_data_fields()
+            one=self.data.get_one_Interventionn(record_no)
+            location = self.data.update_redflag_geolocation(record_no,record_geolocation)
+            if one:
+                self.data.update_redflag_geolocation(record_no,record_geolocation)
+                response_object = {
+                    'message': 'Record has been delete successfully'
+                }
+                return jsonify(response_object), 202
+            return ('record not found'),404
+        return Error_message.no_items('record')
+
+
+class Extension(MethodView):
+    record_title = None
+    record_geolocation = None
+    record_type = None
+    status='Under Investigation'
+    val = Verification()
+    record_data = Error_message()
+    data = DatabaseConnection()
+    record=Record()
+
+    @jwt_required
+    def get(self):
+        user_id = get_jwt_identity()
+        user = user_id[0]
+        admin= user_id[3]
+
+        if admin == 'FALSE' or admin == 'TRUE' and user:
+
+            all_records= self.data.get_all_interventions()
+            return (all_records),200
+        return Error_message.denied_permission()

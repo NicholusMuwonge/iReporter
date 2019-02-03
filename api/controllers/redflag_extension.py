@@ -17,11 +17,13 @@ class Redflag(MethodView):
     def get(self):
         user_id = get_jwt_identity()
         user = user_id[0]
-        admin= user[3]
+        admin= user_id[3]
 
         if admin == 'FALSE' or admin == 'TRUE' and user:
 
             all_records= db.get_all_redflags()
-            return jsonify({'data' : all_records,
-            'message' : 'all the records retrieved'}),200
+            return (all_records),200
+        return Error_message.denied_permission()
+
+        
         
