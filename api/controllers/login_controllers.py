@@ -14,7 +14,6 @@ from flask_jwt_extended import (
 from api.validation.verifications import Verification
 
 
-
 class Login(MethodView):
     """
     User login class
@@ -25,7 +24,6 @@ class Login(MethodView):
     order = Record()
     val = Verification()
 
-    
     def post(self):
         # to get post data
         post_data = request.get_json()
@@ -48,7 +46,7 @@ class Login(MethodView):
                 'status': 'success',
                 'message': 'You are logged in',
                 'access_token': create_access_token(
-                    identity=user,expires_delta=datetime.timedelta(minutes=60)
+                    identity=user, expires_delta=datetime.timedelta(minutes=1)
                     ),
                 'logged_in_as': str(user[1])
                 }
@@ -71,7 +69,7 @@ class Login(MethodView):
         admin = user[3]
         user_id = user[0]
 
-        if user_id and admin == "FALSE" :
+        if user_id and admin == "FALSE":
             my_records = self.data.get_records_for_specific_users(user_id)
             if isinstance(my_records, object):
                 user=self.data.find_user_by_id(user_id)
