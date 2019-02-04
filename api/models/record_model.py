@@ -12,7 +12,8 @@ class Record:
     def __init__(
         self, record_type=None, record_title=None, 
         record_geolocation=None, status=None, 
-        user_id=None,record_no=None
+        user_id=None, record_no=None,
+        body=None, upload=None
         ):
         self.record_no = None
         self.user_id = user_id
@@ -20,18 +21,21 @@ class Record:
         self.record_geolocation = record_geolocation
         self.record_type = record_type
         self.status = 'Pending'
-        
-        
+        self.body = None
+        self.upload = None
 
     def post_record(
-        self,record_type=None, record_title=None, 
-        record_geolocation=None, user_id=None
-        ):
+                    self, record_type=None, record_title=None, 
+                    record_geolocation=None, user_id=None,
+                    body=None, upload=None
+                    ):
         """
         post new intervention record
         """
         record_placed = self.db.post_record(
-             record_geolocation,record_title,record_type, user_id
+             record_geolocation, record_title,
+             record_type, user_id,
+             body, upload
             )
 
         return record_placed

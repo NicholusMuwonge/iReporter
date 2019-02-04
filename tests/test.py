@@ -1,7 +1,11 @@
 from flask import Flask, json, jsonify
 import unittest
 from run import app
-from flask_jwt_extended import get_csrf_token,jwt_refresh_token_required,jwt_required
+from flask_jwt_extended import (
+                        get_csrf_token, 
+                        jwt_refresh_token_required, 
+                        jwt_required
+                                )
 # from api.models.database import DatabaseConnection
 
 # db=DatabaseConnection()
@@ -19,14 +23,14 @@ class test_feature(unittest.TestCase):
         "email":'nichol@g.com'}
         self.app = app
         self.client = self.app.test_client()
-        self.client.post('/api/v2/auth/signup/',data = json.dumps(
+        self.client.post('/api/v2/auth/signup/',data =json.dumps(
             dict(user_name='geraldine',
                 user_password='gerry1',
                 email='gerry@gmail.com')
         ),\
         content_type = ('application/json'))
         login=self.client.post('/api/v2/auth/login/',\
-        data = json.dumps({"user_name":"geraldine","user_password":'gerry1'}),\
+        data = json.dumps({"user_name" : "geraldine","user_password":'gerry1'}),\
         content_type = ('application/json'))
         login_decode_message= json.loads(login.data.decode())
         # print(login_decode_message)
@@ -237,7 +241,9 @@ class test_feature(unittest.TestCase):
             headers=dict(
                 Authorization='Bearer ' + self.Token
             ),
-            data=json.dumps(dict(record_title='theft',record_type='intervention',record_geolocation = "0.88899 -0.9000")),
+            data=json.dumps(dict(
+                record_title='theft',record_type='intervention',
+                record_geolocation = "0.88899 -0.9000", body= "please checkout the broken sewer pipes")),
             content_type="application/json"
         )
 

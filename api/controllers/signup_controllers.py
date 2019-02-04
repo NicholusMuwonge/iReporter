@@ -31,7 +31,7 @@ class Signup(MethodView):
         except AttributeError:
             return Error_message.invalid_data_format()
 
-        if not user_name or not email  or not user_password:
+        if not user_name or not email or not user_password:
             return Error_message.empty_data_fields()
         elif not self.val.validate_password(user_password, 5):
             return Error_message.invalid_password()

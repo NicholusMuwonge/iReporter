@@ -72,7 +72,7 @@ class Login(MethodView):
         if user_id and admin == "FALSE":
             my_records = self.data.get_records_for_specific_users(user_id)
             if isinstance(my_records, object):
-                user=self.data.find_user_by_id(user_id)
+                user = self.data.find_user_by_id(user_id)
                 return (my_records), 200
             else:
                 return Error_message.no_items('record')
@@ -88,14 +88,14 @@ class Login(MethodView):
         user_id = user[0]
 
         if admin == "FALSE" and user_id:
-            post_data=request.get_json()
+            post_data = request.get_json()
             keys=('record_geolocation')
             # if not set(keys).issubset((post_data)):
             #     return Error_message.missing_key(keys)
             if not keys in post_data:
                 return Error_message.missing_fields(record_geolocation)
             try:
-                record_geolocation=post_data['record_geolocation'].strip()
+                record_geolocation = post_data['record_geolocation'].strip()
             except AttributeError:
                     return Error_message.invalid_data_format()
 

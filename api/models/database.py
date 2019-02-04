@@ -2,7 +2,8 @@
 import os
 import psycopg2
 from psycopg2.extras import RealDictCursor
-from flask import Flask, json, jsonify # test db db for travis , discover flask configurations
+from flask import Flask, json, jsonify # test db db for travis ,
+                                        # discover flask configurations
 from dotenv import load_dotenv
 
 
@@ -20,7 +21,7 @@ class DatabaseConnection:
         else:
             
             self.connection = psycopg2.connect(
-                host="localhost", database="trying", 
+                host="localhost", database="update_db", 
                 user="postgres",
                 port="5432", password=""
                 )
@@ -57,7 +58,9 @@ class DatabaseConnection:
                     record_geolocation VARCHAR(255) NOT NULL,
                     record_type VARCHAR(255) NOT NULL,
                     status VARCHAR(255) NOT NULL DEFAULT 'Pending',
-                    record_placement_date TIMESTAMP DEFAULT NOW() NOT NULL
+                    record_placement_date TIMESTAMP DEFAULT NOW() NOT NULL,
+                    body VARCHAR(255) NOT NULL,
+                    upload VARCHAR(255) NULL
                     )
             """
         )
@@ -120,17 +123,20 @@ class DatabaseConnection:
         return check_email
 
     def post_record(self, 
-        record_title, record_geolocation, 
-        record_type, user_id):
+                    record_title, record_geolocation, 
+                    record_type, user_id,
+                    body, upload):
         """
         insert record details into the table records
         """
         record_posted = """INSERT INTO records (
-            record_title, record_geolocation, record_type, user_id
+            record_title, record_geolocation, record_type, user_id,body, upload
             )
-                    VALUES ('{0}', '{1}', '{2}', '{3}');""".format(
+                    VALUES (
+                        '{0}', '{1}', '{2}', '{3}', '{4}','{5}');""".format(
                         record_title, record_geolocation, 
-                        record_type, user_id
+                        record_type, user_id,
+                        body, upload
                         )
         self.cursor.execute(record_posted)
         return ('created')

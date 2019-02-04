@@ -11,6 +11,7 @@ from flask_jwt_extended import (
     jwt_required, get_jwt_identity
     )
 
+
 class Record_logic(MethodView):
     """
     Class with  methods to handle get, post and put methods
@@ -18,11 +19,13 @@ class Record_logic(MethodView):
     record_title = None
     record_geolocation = None
     record_type = None
-    status='Pending'
+    status ='Pending'
     val = Verification()
     record_data = Error_message()
     data = DatabaseConnection()
-    record=Record()
+    record = Record()
+    body = None
+    upload = None
 
     @jwt_required
     def post(self):
@@ -37,7 +40,8 @@ class Record_logic(MethodView):
 
             post_data = request.get_json()
             keys = (
-                "record_title", "record_geolocation", "record_type"
+                "record_title", "record_geolocation", 
+                "record_type", "body"
                 )
 
             if not set(keys).issubset(set(post_data)):
@@ -45,17 +49,22 @@ class Record_logic(MethodView):
 
             try:
                 self.record_title = post_data['record_title'].strip()
-                self.record_geolocation = post_data['record_geolocation'].strip()
+                self.record_geolocation = post_data[
+                                                'record_geolocation'].strip()
                 self.record_type = post_data['record_type'].strip()
+                self.body = post_data['body'].strip()
 
             except AttributeError:
                 return Error_message.invalid_data_format()
 
-            if not self.record_title or not self.record_geolocation or not self.record_type:
+            if not self.record_title or not self.record_geolocation or not self.record_type or not self.body:
                 return Error_message.empty_data_fields()
             # elif not isinstance(self.record_geolocation,float):
             #     return Error_message.invalid_input()
-            new_record = self.record.post_record(self.record_type,self.record_geolocation,self.record_title,str(user_id))
+            new_record = self.record.post_record(
+                                    self.record_type, self.record_geolocation, 
+                                    self.record_title, str(user_id), 
+                                    self.body, self.upload)
             response_object = {
                 'message': 'Successfully posted a new record',
                 'data': new_record
