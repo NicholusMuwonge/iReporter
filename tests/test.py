@@ -35,7 +35,7 @@ class test_feature(unittest.TestCase):
         login_decode_message= json.loads(login.data.decode())
         # print(login_decode_message)
         self.Token = login_decode_message.get('access_token')
-        # print(self.Token)
+        # print(self.Token.decode())
 
     @classmethod
     def tearDown(self):
