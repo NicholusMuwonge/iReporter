@@ -103,12 +103,14 @@ class Record_logic(MethodView):
                         "record_type": record['record_type'],
                         "status": record['status'],
                         "record_no": record['record_no'],
-                        "record_placement_date": record['record_placement_date']
+                        "record_placement_date": record['record_placement_date'],
+                        "body": record['body']
                         
                     }
                     records.append(res_data)
 
                 response_object = {
+                    "status": "success",
                     "msg": "Successfully got all record  records",
                     "data": records
                     }

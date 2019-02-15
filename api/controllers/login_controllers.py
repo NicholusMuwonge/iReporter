@@ -52,7 +52,9 @@ class Login(MethodView):
                 'status': 'success',
                 'message': 'You are logged in',
                 'access_token': create_access_token(
-                    identity=user, expires_delta=datetime.timedelta(minutes=5)
+
+                    identity=user, expires_delta=datetime.timedelta(minutes=30)
+
                     ),
                 'logged_in_as': str(user[1]),
                 "user_id": int(user[0]),
