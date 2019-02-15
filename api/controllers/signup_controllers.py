@@ -7,6 +7,7 @@ from api.Error.responses import Error_message
 from api.models.user_model import User
 from api.validation.verifications import Verification
 from api.authentication.authenticate import Authenticate
+from flasgger import swag_from
 
 
 class Signup(MethodView):
@@ -16,6 +17,7 @@ class Signup(MethodView):
     myUser = User()
     val = Verification()
 
+    @swag_from('../docs/signup.yaml')
     def post(self):
 
         post_data = request.get_json()

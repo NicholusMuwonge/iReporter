@@ -12,6 +12,7 @@ from flask_jwt_extended import (
     create_access_token, jwt_required, get_jwt_identity
     )
 from api.validation.verifications import Verification
+from flasgger import swag_from
 
 
 class Login(MethodView):
@@ -24,7 +25,12 @@ class Login(MethodView):
     order = Record()
     val = Verification()
 
+    @swag_from('../docs/login.yml')
     def post(self):
+        """
+        user is able to login as admin or ordinary user
+        :return:
+        """
         # to get post data
         post_data = request.get_json()
         keys = ('user_name', 'user_password')
@@ -48,7 +54,9 @@ class Login(MethodView):
                 'access_token': create_access_token(
                     identity=user, expires_delta=datetime.timedelta(minutes=5)
                     ),
-                'logged_in_as': str(user[1])
+                'logged_in_as': str(user[1]),
+                "user_id": int(user[0]),
+                "admin": str(user[3])
                 }
 
             return jsonify(response_object), 200
@@ -61,6 +69,7 @@ class Login(MethodView):
             return jsonify(response_object), 404
 
     @jwt_required
+    @swag_from('../docs/get_one_user_records.yml')
     def get(self, user_id):
         """
         Method to return a single users record records

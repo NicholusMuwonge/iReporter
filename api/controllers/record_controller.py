@@ -10,6 +10,7 @@ from api.models.database import DatabaseConnection
 from flask_jwt_extended import (
     jwt_required, get_jwt_identity
     )
+from flasgger import swag_from
 
 
 class Record_logic(MethodView):
@@ -28,6 +29,7 @@ class Record_logic(MethodView):
     upload = None
 
     @jwt_required
+    @swag_from('../docs/post_record.yml')
     def post(self):
         """
         post method to handle posting an record
@@ -73,6 +75,7 @@ class Record_logic(MethodView):
         return Error_message.permission_denied()
 
     @jwt_required
+    @swag_from('../docs/get_all_records.yml')
     def get(self, record_no=None):
         """
         get method to return a list of records

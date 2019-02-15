@@ -7,7 +7,7 @@ from api.views.routes import Routes
 from flask_jwt_extended import JWTManager
 from api.models.database import DatabaseConnection
 from flask_cors import CORS
-
+from flasgger import Swagger
 
 app = Flask(__name__)
 app.env = 'development'
@@ -15,6 +15,7 @@ Routes.generate(app)
 app.config['JWT_SECRET_KEY'] = 'nicks'
 jwt = JWTManager(app)
 CORS(app)
+Swagger(app)
 
 
 @app.before_first_request

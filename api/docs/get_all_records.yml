@@ -1,0 +1,27 @@
+user can get all records (redflag & intervention)
+---
+tags:
+  - Get records (normal user route and admin)
+parameters:
+  - name: Authorization
+    in: header
+    required: true
+    type: string
+    description: Authorization header required for user authentication
+  - name: body
+    in: body
+    required: true
+    type: string
+    description: This route is used by a user to retrieve already created records
+responses:
+  200:
+    description: Successfully got all record  records
+security:
+  - JWT:
+    description: Pass in jwt token i.e Bearer <jwt>
+    type: apiKey
+    scheme: bearer
+    name: Authorization
+    in: header
+    template: "Bearer {apiKey}"
+    bearerFormat: JWT
